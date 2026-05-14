@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #1e6fad;
+  --color-brand-dark: #185d93;
+  --color-dark: #1a1a1a;
+  --color-cream: #f5f0e8;
+  --color-text-body: #555555;
+  --color-border: #e0e0e0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #333;
+}
+
+/* ── Hero load animation ───────────────────────────────────────────── */
+@keyframes hero-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-animate {
+  animation: hero-fade-in 0.9s ease both;
+}
+.hero-animate-delay {
+  animation: hero-fade-in 0.9s ease 0.3s both;
+}
+
+/* ── Scroll reveal animations ──────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.reveal-fade-up   { transform: translateY(32px); }
+.reveal.reveal-fade-left { transform: translateX(-32px); }
+.reveal.reveal-fade-right{ transform: translateX(32px); }
+.reveal.reveal-scale     { transform: scale(0.93); }
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered children: each .reveal inside a .stagger-children gets a delay */
+.stagger-children .reveal:nth-child(1) { transition-delay: 0s; }
+.stagger-children .reveal:nth-child(2) { transition-delay: 0.12s; }
+.stagger-children .reveal:nth-child(3) { transition-delay: 0.24s; }
+.stagger-children .reveal:nth-child(4) { transition-delay: 0.36s; }
+.stagger-children .reveal:nth-child(5) { transition-delay: 0.48s; }
+.stagger-children .reveal:nth-child(6) { transition-delay: 0.60s; }
+
+/* Desktop nav dropdown — CSS-only hover, no JS */
+.nav-dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+.nav-item:hover .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}

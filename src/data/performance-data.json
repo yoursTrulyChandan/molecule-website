@@ -1,0 +1,24 @@
+{
+  "updatedAt": "2026-01-31",
+  "data": [
+    { "label": "Sep-21", "cumPortfolio": 10,  "cumBenchmark": 10, "qtrPortfolio": 10,  "qtrBenchmark": 11 },
+    { "label": "Dec-21", "cumPortfolio": 14,  "cumBenchmark": 14, "qtrPortfolio": 4,   "qtrBenchmark": 4  },
+    { "label": "Mar-22", "cumPortfolio": 9,   "cumBenchmark": 9,  "qtrPortfolio": 0,   "qtrBenchmark": -4 },
+    { "label": "Jun-22", "cumPortfolio": 10,  "cumBenchmark": 1,  "qtrPortfolio": 0,   "qtrBenchmark": 1  },
+    { "label": "Sep-22", "cumPortfolio": 39,  "cumBenchmark": 10, "qtrPortfolio": 27,  "qtrBenchmark": -10},
+    { "label": "Dec-22", "cumPortfolio": 54,  "cumBenchmark": 14, "qtrPortfolio": 11,  "qtrBenchmark": 11 },
+    { "label": "Mar-23", "cumPortfolio": 41,  "cumBenchmark": 9,  "qtrPortfolio": -9,  "qtrBenchmark": 4  },
+    { "label": "Jun-23", "cumPortfolio": 67,  "cumBenchmark": 10, "qtrPortfolio": 13,  "qtrBenchmark": -6 },
+    { "label": "Sep-23", "cumPortfolio": 91,  "cumBenchmark": 39, "qtrPortfolio": 19,  "qtrBenchmark": 14 },
+    { "label": "Dec-23", "cumPortfolio": 130, "cumBenchmark": 54, "qtrPortfolio": 21,  "qtrBenchmark": 5  },
+    { "label": "Mar-24", "cumPortfolio": 132, "cumBenchmark": 41, "qtrPortfolio": 1,   "qtrBenchmark": 12 },
+    { "label": "Jun-24", "cumPortfolio": 167, "cumBenchmark": 67, "qtrPortfolio": 21,  "qtrBenchmark": 4  },
+    { "label": "Sep-24", "cumPortfolio": 181, "cumBenchmark": 72, "qtrPortfolio": 5,   "qtrBenchmark": 15 },
+    { "label": "Dec-24", "cumPortfolio": 186, "cumBenchmark": 85, "qtrPortfolio": 6,   "qtrBenchmark": 12 },
+    { "label": "Mar-25", "cumPortfolio": 168, "cumBenchmark": 71, "qtrPortfolio": -23, "qtrBenchmark": -8 },
+    { "label": "Jun-25", "cumPortfolio": 183, "cumBenchmark": 63, "qtrPortfolio": 21,  "qtrBenchmark": 2  },
+    { "label": "Sep-25", "cumPortfolio": 199, "cumBenchmark": 81, "qtrPortfolio": 6,   "qtrBenchmark": 11 },
+    { "label": "Dec-25", "cumPortfolio": 161, "cumBenchmark": 75, "qtrPortfolio": -3,  "qtrBenchmark": 6  },
+    { "label": "Mar-26", "cumPortfolio": 161, "cumBenchmark": 84, "qtrPortfolio": -13, "qtrBenchmark": -3 }
+  ]
+}
