@@ -137,7 +137,9 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {store.data.map((row, idx) => (
+              {[...store.data].reverse().map((row, reversedPos) => {
+                const idx = store.data.length - 1 - reversedPos;
+                return (
                 <tr
                   key={idx}
                   className={idx === currentIdx ? "bg-blue-50" : "hover:bg-gray-50"}
@@ -171,7 +173,7 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
                     </button>
                   </td>
                 </tr>
-              ))}
+              )})}
             </tbody>
           </table>
         </div>
