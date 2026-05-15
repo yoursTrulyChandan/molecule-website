@@ -10,12 +10,12 @@ export default function NewsCard({ article }: { article: NewsArticle }) {
       className="group block"
     >
       {/* Thumbnail — image first */}
-      <div className="relative aspect-video overflow-hidden rounded-sm mb-4">
+      <div className="relative aspect-video overflow-hidden rounded-sm mb-4 bg-gray-100">
         <Image
           src={article.image}
           alt={article.title}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="object-contain"
           sizes="(max-width: 640px) 100vw, 50vw"
         />
       </div>
