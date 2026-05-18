@@ -10,6 +10,13 @@ async function requireAuth() {
   return email;
 }
 
+function lastDayOfPrevMonth(): string {
+  const now = new Date();
+  // new Date(year, month, 0) = last day of previous month
+  const last = new Date(now.getFullYear(), now.getMonth(), 0);
+  return last.toISOString().slice(0, 10);
+}
+
 export async function GET() {
   const email = await requireAuth();
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -33,7 +40,7 @@ export async function POST(req: NextRequest) {
 
   const store = await getPerformanceData();
   store.data.push(entry);
-  store.updatedAt = new Date().toISOString().slice(0, 10);
+  store.updatedAt = lastDayOfPrevMonth();
 
   await setPerformanceData(store);
   revalidatePath("/about-us");
@@ -71,7 +78,7 @@ export async function PUT(req: NextRequest) {
     qtrPortfolio: Number(entry.qtrPortfolio),
     qtrBenchmark: Number(entry.qtrBenchmark),
   };
-  store.updatedAt = new Date().toISOString().slice(0, 10);
+  store.updatedAt = lastDayOfPrevMonth();
 
   await setPerformanceData(store);
   revalidatePath("/about-us");
@@ -99,7 +106,7 @@ export async function DELETE(req: NextRequest) {
   }
 
   store.data.splice(index, 1);
-  store.updatedAt = new Date().toISOString().slice(0, 10);
+  store.updatedAt = lastDayOfPrevMonth();
 
   await setPerformanceData(store);
   revalidatePath("/about-us");

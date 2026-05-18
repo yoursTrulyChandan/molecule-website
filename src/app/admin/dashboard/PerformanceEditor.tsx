@@ -4,11 +4,7 @@ import { useState } from "react";
 import type { PerformanceStore, PerformanceEntry } from "@/lib/performance-storage";
 
 const emptyEntry = (): PerformanceEntry => ({
-  label: "",
-  cumPortfolio: 0,
-  cumBenchmark: 0,
-  qtrPortfolio: 0,
-  qtrBenchmark: 0,
+  label: "", cumPortfolio: 0, cumBenchmark: 0, qtrPortfolio: 0, qtrBenchmark: 0,
 });
 
 type ModalState =
@@ -34,24 +30,18 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
     setError("");
     setModal({ type: "add" });
   }
-
   function openEdit(idx: number) {
     setFormEntry({ ...store.data[idx] });
     setEditPassword("");
     setError("");
     setModal({ type: "edit", index: idx });
   }
-
   function openDelete(idx: number) {
     setEditPassword("");
     setError("");
     setModal({ type: "delete", index: idx });
   }
-
-  function closeModal() {
-    setModal({ type: "none" });
-    setError("");
-  }
+  function closeModal() { setModal({ type: "none" }); setError(""); }
 
   function updateField(field: keyof PerformanceEntry, value: string) {
     setFormEntry((prev) => ({
@@ -60,241 +50,273 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
     }));
   }
 
-  async function handleAdd() {
-    setSaving(true);
-    setError("");
-    try {
-      const res = await fetch("/api/admin/performance", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formEntry),
-      });
-      const data = await res.json();
-      if (!res.ok) { setError(data.error ?? "Failed to save"); return; }
-      setStore(data.data);
-      closeModal();
-    } catch { setError("Network error"); }
-    finally { setSaving(false); }
+  async function apiCall(method: string, body: object) {
+    const res = await fetch("/api/admin/performance", {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    return res;
   }
 
-  async function handleEdit() {
-    if (modal.type !== "edit") return;
+  async function handleSubmit() {
     setSaving(true);
     setError("");
     try {
-      const res = await fetch("/api/admin/performance", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      let res;
+      if (modal.type === "add") {
+        res = await apiCall("POST", formEntry);
+      } else if (modal.type === "edit") {
+        res = await apiCall("PUT", {
           index: modal.index,
           entry: formEntry,
           editPassword: isPast(modal.index) ? editPassword : undefined,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) { setError(data.error ?? "Failed to save"); return; }
-      setStore(data.data);
-      closeModal();
-    } catch { setError("Network error"); }
-    finally { setSaving(false); }
-  }
-
-  async function handleDelete() {
-    if (modal.type !== "delete") return;
-    setSaving(true);
-    setError("");
-    try {
-      const res = await fetch("/api/admin/performance", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        });
+      } else if (modal.type === "delete") {
+        res = await apiCall("DELETE", {
           index: modal.index,
           editPassword: isPast(modal.index) ? editPassword : undefined,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) { setError(data.error ?? "Failed to delete"); return; }
+        });
+      } else return;
+
+      const data = await res!.json();
+      if (!res!.ok) { setError(data.error ?? "Operation failed"); return; }
       setStore(data.data);
       closeModal();
-    } catch { setError("Network error"); }
+    } catch { setError("Network error. Please try again."); }
     finally { setSaving(false); }
   }
 
+  const modalIdx = modal.type !== "none" && modal.type !== "add"
+    ? (modal as { type: string; index: number }).index
+    : -1;
+
+  const reversedRows = [...store.data].map((row, i) => ({ row, idx: i })).reverse();
+
   return (
-    <div>
-      {/* Table */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-4 py-3 text-left font-semibold text-gray-600">Period</th>
-                <th className="px-4 py-3 text-right font-semibold text-gray-600">Cum. Portfolio %</th>
-                <th className="px-4 py-3 text-right font-semibold text-gray-600">Cum. Benchmark %</th>
-                <th className="px-4 py-3 text-right font-semibold text-gray-600">Qtr. Portfolio %</th>
-                <th className="px-4 py-3 text-right font-semibold text-gray-600">Qtr. Benchmark %</th>
-                <th className="px-4 py-3 text-center font-semibold text-gray-600">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {[...store.data].reverse().map((row, reversedPos) => {
-                const idx = store.data.length - 1 - reversedPos;
-                return (
-                <tr
-                  key={idx}
-                  className={idx === currentIdx ? "bg-blue-50" : "hover:bg-gray-50"}
-                >
-                  <td className="px-4 py-3 font-medium text-gray-800">
-                    {row.label}
-                    {idx === currentIdx && (
-                      <span className="ml-2 text-xs bg-brand text-white rounded-full px-2 py-0.5">Current</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-right text-gray-700">{row.cumPortfolio}</td>
-                  <td className="px-4 py-3 text-right text-gray-700">{row.cumBenchmark}</td>
-                  <td className={`px-4 py-3 text-right font-medium ${row.qtrPortfolio >= 0 ? "text-green-600" : "text-red-600"}`}>
-                    {row.qtrPortfolio}
-                  </td>
-                  <td className={`px-4 py-3 text-right font-medium ${row.qtrBenchmark >= 0 ? "text-green-600" : "text-red-600"}`}>
-                    {row.qtrBenchmark}
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <button
-                      onClick={() => openEdit(idx)}
-                      className="text-brand hover:underline text-xs font-medium mr-3"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => openDelete(idx)}
-                      className="text-red-500 hover:underline text-xs font-medium"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              )})}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className="mt-4 flex items-center justify-between">
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
         <p className="text-xs text-gray-400">
-          Last updated: {store.updatedAt ?? "—"}
+          Last updated: <span className="font-medium text-gray-600">{store.updatedAt ?? "—"}</span>
         </p>
-        <button
-          onClick={openAdd}
-          className="bg-brand hover:bg-brand-dark text-white text-sm font-medium rounded-lg px-5 py-2 transition-colors"
-        >
-          + Add New Quarter
-        </button>
       </div>
 
-      {/* Modal */}
+      {/* ── Cumulative Performance Table ── */}
+      <TableSection
+        title="Cumulative Performance"
+        onAdd={openAdd}
+        columns={["Period", "Portfolio", "BSE500TRI", "Actions"]}
+      >
+        {reversedRows.map(({ row, idx }) => (
+          <tr key={idx} className={idx === currentIdx ? "bg-blue-50/60" : "hover:bg-gray-50 transition-colors"}>
+            <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">
+              {row.label}
+              {idx === currentIdx && (
+                <span className="ml-2 text-[10px] bg-brand text-white rounded-full px-2 py-0.5 font-semibold tracking-wide">CURRENT</span>
+              )}
+            </td>
+            <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.cumPortfolio}</td>
+            <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.cumBenchmark}</td>
+            <td className="px-4 py-3 text-center">
+              <ActionButtons onEdit={() => openEdit(idx)} onDelete={() => openDelete(idx)} />
+            </td>
+          </tr>
+        ))}
+      </TableSection>
+
+      {/* ── Quarterly Performance Table ── */}
+      <TableSection
+        title="Quarterly Performance"
+        columns={["Period", "Portfolio", "BSE500TRI", "Actions"]}
+      >
+        {reversedRows.map(({ row, idx }) => (
+          <tr key={idx} className={idx === currentIdx ? "bg-blue-50/60" : "hover:bg-gray-50 transition-colors"}>
+            <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">
+              {row.label}
+              {idx === currentIdx && (
+                <span className="ml-2 text-[10px] bg-brand text-white rounded-full px-2 py-0.5 font-semibold tracking-wide">CURRENT</span>
+              )}
+            </td>
+            <td className={`px-4 py-3 text-right tabular-nums font-medium ${row.qtrPortfolio >= 0 ? "text-emerald-600" : "text-red-500"}`}>
+              {row.qtrPortfolio}
+            </td>
+            <td className={`px-4 py-3 text-right tabular-nums font-medium ${row.qtrBenchmark >= 0 ? "text-emerald-600" : "text-red-500"}`}>
+              {row.qtrBenchmark}
+            </td>
+            <td className="px-4 py-3 text-center">
+              <ActionButtons onEdit={() => openEdit(idx)} onDelete={() => openDelete(idx)} />
+            </td>
+          </tr>
+        ))}
+      </TableSection>
+
+      {/* ── Modal ── */}
       {modal.type !== "none" && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
-            <h2 className="text-lg font-bold text-gray-800 mb-4">
-              {modal.type === "add" && "Add New Quarter"}
-              {modal.type === "edit" && `Edit — ${store.data[(modal as { type: "edit"; index: number }).index]?.label}`}
-              {modal.type === "delete" && `Delete — ${store.data[(modal as { type: "delete"; index: number }).index]?.label}`}
-            </h2>
-
-            {modal.type !== "delete" && (
-              <div className="space-y-3 mb-4">
-                <FieldInput label="Period Label (e.g. Jun-26)" value={formEntry.label} onChange={(v) => updateField("label", v)} />
-                <FieldInput label="Cumulative Portfolio %" value={String(formEntry.cumPortfolio)} onChange={(v) => updateField("cumPortfolio", v)} type="number" />
-                <FieldInput label="Cumulative Benchmark %" value={String(formEntry.cumBenchmark)} onChange={(v) => updateField("cumBenchmark", v)} type="number" />
-                <FieldInput label="Quarterly Portfolio %" value={String(formEntry.qtrPortfolio)} onChange={(v) => updateField("qtrPortfolio", v)} type="number" />
-                <FieldInput label="Quarterly Benchmark %" value={String(formEntry.qtrBenchmark)} onChange={(v) => updateField("qtrBenchmark", v)} type="number" />
+        <Modal
+          title={
+            modal.type === "add" ? "Add New Quarter"
+            : modal.type === "edit" ? `Edit — ${store.data[modalIdx]?.label}`
+            : `Delete — ${store.data[modalIdx]?.label}`
+          }
+          onClose={closeModal}
+          onConfirm={handleSubmit}
+          confirmLabel={
+            saving ? "Saving…"
+            : modal.type === "add" ? "Add Quarter"
+            : modal.type === "edit" ? "Save Changes"
+            : "Delete"
+          }
+          confirmDestructive={modal.type === "delete"}
+          saving={saving}
+          error={error}
+        >
+          {modal.type !== "delete" && (
+            <div className="space-y-3">
+              <FieldInput label="Period Label (e.g. Jun-26)" value={formEntry.label} onChange={(v) => updateField("label", v)} />
+              <div className="grid grid-cols-2 gap-3">
+                <FieldInput label="Cumulative Portfolio" value={String(formEntry.cumPortfolio)} onChange={(v) => updateField("cumPortfolio", v)} type="number" />
+                <FieldInput label="Cumulative BSE500TRI" value={String(formEntry.cumBenchmark)} onChange={(v) => updateField("cumBenchmark", v)} type="number" />
+                <FieldInput label="Quarterly Portfolio" value={String(formEntry.qtrPortfolio)} onChange={(v) => updateField("qtrPortfolio", v)} type="number" />
+                <FieldInput label="Quarterly BSE500TRI" value={String(formEntry.qtrBenchmark)} onChange={(v) => updateField("qtrBenchmark", v)} type="number" />
               </div>
-            )}
-
-            {modal.type === "delete" && (
-              <p className="text-sm text-gray-600 mb-4">
-                Are you sure you want to delete this quarter? This cannot be undone.
-              </p>
-            )}
-
-            {/* Edit password for past periods */}
-            {modal.type !== "add" &&
-              isPast((modal as { type: string; index: number }).index) && (
-              <div className="mb-4">
-                <label className="block text-xs font-medium text-gray-600 mb-1">
-                  Edit Password (required for past periods)
-                </label>
-                <input
-                  type="password"
-                  value={editPassword}
-                  onChange={(e) => setEditPassword(e.target.value)}
-                  placeholder="EditMolecule@2026"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/50"
-                />
-              </div>
-            )}
-
-            {error && (
-              <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-3">{error}</p>
-            )}
-
-            <div className="flex gap-3 justify-end">
-              <button
-                onClick={closeModal}
-                className="text-sm text-gray-600 hover:text-gray-800 px-4 py-2 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                disabled={saving}
-                onClick={
-                  modal.type === "add"
-                    ? handleAdd
-                    : modal.type === "edit"
-                    ? handleEdit
-                    : handleDelete
-                }
-                className={`text-sm font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 ${
-                  modal.type === "delete"
-                    ? "bg-red-600 hover:bg-red-700 text-white"
-                    : "bg-brand hover:bg-brand-dark text-white"
-                }`}
-              >
-                {saving
-                  ? "Saving…"
-                  : modal.type === "add"
-                  ? "Add Quarter"
-                  : modal.type === "edit"
-                  ? "Save Changes"
-                  : "Delete"}
-              </button>
             </div>
-          </div>
-        </div>
+          )}
+          {modal.type === "delete" && (
+            <p className="text-sm text-gray-600">Are you sure you want to delete this quarter? This cannot be undone.</p>
+          )}
+          {modal.type !== "add" && isPast(modalIdx) && (
+            <PasswordField value={editPassword} onChange={setEditPassword} />
+          )}
+        </Modal>
       )}
     </div>
   );
 }
 
-function FieldInput({
-  label,
-  value,
-  onChange,
-  type = "text",
+/* ── Shared sub-components ─────────────────────────────────────────── */
+
+function TableSection({
+  title, columns, children, onAdd,
 }: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  type?: string;
+  title: string;
+  columns: string[];
+  children: React.ReactNode;
+  onAdd?: () => void;
 }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-gray-600 mb-1">{label}</label>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-base font-semibold text-gray-700">{title}</h3>
+        {onAdd && (
+          <button
+            onClick={onAdd}
+            className="inline-flex items-center gap-1.5 bg-brand hover:bg-brand-dark text-white text-xs font-semibold rounded-lg px-4 py-2 transition-colors shadow-sm"
+          >
+            <span className="text-base leading-none">+</span> Add New Quarter
+          </button>
+        )}
+      </div>
+      <div className="rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+        <div className="overflow-auto max-h-105">
+          <table className="w-full text-sm">
+            <thead className="sticky top-0 z-10 bg-gray-50 border-b border-gray-200">
+              <tr>
+                {columns.map((col) => (
+                  <th
+                    key={col}
+                    className={`px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider ${col === "Period" ? "text-left" : col === "Actions" ? "text-center" : "text-right"}`}
+                  >
+                    {col}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 bg-white">{children}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ActionButtons({ onEdit, onDelete }: { onEdit: () => void; onDelete: () => void }) {
+  return (
+    <div className="flex items-center justify-center gap-3">
+      <button onClick={onEdit} className="text-brand hover:text-brand-dark text-xs font-semibold transition-colors">Edit</button>
+      <span className="text-gray-200">|</span>
+      <button onClick={onDelete} className="text-red-500 hover:text-red-600 text-xs font-semibold transition-colors">Delete</button>
+    </div>
+  );
+}
+
+export function Modal({
+  title, children, onClose, onConfirm, confirmLabel, confirmDestructive, saving, error,
+}: {
+  title: string;
+  children: React.ReactNode;
+  onClose: () => void;
+  onConfirm: () => void;
+  confirmLabel: string;
+  confirmDestructive?: boolean;
+  saving?: boolean;
+  error?: string;
+}) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-bold text-gray-800">{title}</h2>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors text-xl leading-none">×</button>
+        </div>
+        <div className="space-y-3">{children}</div>
+        {error && <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">{error}</p>}
+        <div className="flex gap-3 justify-end pt-1">
+          <button onClick={onClose} className="text-sm text-gray-600 hover:text-gray-800 px-4 py-2 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
+            Cancel
+          </button>
+          <button
+            disabled={saving}
+            onClick={onConfirm}
+            className={`text-sm font-semibold px-5 py-2 rounded-lg transition-colors disabled:opacity-50 shadow-sm ${
+              confirmDestructive ? "bg-red-600 hover:bg-red-700 text-white" : "bg-brand hover:bg-brand-dark text-white"
+            }`}
+          >
+            {confirmLabel}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function FieldInput({
+  label, value, onChange, type = "text",
+}: {
+  label: string; value: string; onChange: (v: string) => void; type?: string;
+}) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold text-gray-500 mb-1">{label}</label>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand"
+        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition-shadow"
+      />
+    </div>
+  );
+}
+
+export function PasswordField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="pt-1 border-t border-gray-100">
+      <label className="block text-xs font-semibold text-amber-600 mb-1">Edit Password required for past periods</label>
+      <input
+        type="password"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Enter edit password"
+        className="w-full border border-amber-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300 focus:border-amber-400 transition-shadow bg-amber-50/40"
       />
     </div>
   );

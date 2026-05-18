@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import ComplaintTable from "@/components/shared/ComplaintTable";
-import { WEBSITE_COMPLAINTS, SCORES_COMPLAINTS } from "@/data/complaints";
+import { getComplaintData } from "@/lib/complaints-storage";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = { title: "Complaint Report" };
 
-export default function ComplaintReportPage() {
+export default async function ComplaintReportPage() {
+  const { website, scores } = await getComplaintData();
+
   return (
     <>
       <section className="bg-brand py-16">
@@ -17,14 +21,8 @@ export default function ComplaintReportPage() {
 
       <section className="py-16">
         <div className="max-w-350 mx-auto px-6 space-y-16">
-          <ComplaintTable
-            title="Website Complaint Report"
-            data={WEBSITE_COMPLAINTS}
-          />
-          <ComplaintTable
-            title="SCORES Complaint Report"
-            data={SCORES_COMPLAINTS}
-          />
+          <ComplaintTable title="Website Complaint Report" data={website} />
+          <ComplaintTable title="SCORES Complaint Report" data={scores} />
         </div>
       </section>
     </>

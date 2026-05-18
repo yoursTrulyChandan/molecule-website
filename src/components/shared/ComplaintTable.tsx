@@ -1,7 +1,7 @@
 "use client";
 
 import { Table } from "antd";
-import type { ComplaintRow } from "@/data/complaints";
+import type { ComplaintRow } from "@/lib/complaints-storage";
 
 const columns = [
   { title: "Month", dataIndex: "month", key: "month", width: 100 },
