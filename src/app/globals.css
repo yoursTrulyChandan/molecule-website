@@ -2,6 +2,7 @@
 
 @theme {
   --font-abel: var(--abel);
+  --font-roboto: var(--roboto);
   --color-brand: #1e6fad;
   --color-brand-dark: #185d93;
   --color-dark: #1a1a1a;

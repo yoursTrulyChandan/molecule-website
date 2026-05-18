@@ -8,7 +8,8 @@ const { TextArea } = Input;
 function RL({ children }: { children: React.ReactNode }) {
   return (
     <span>
-      {children}<sup style={{ color: "#ff4d4f", marginLeft: 2 }}>*</sup>
+      {children}
+      <span style={{ color: "#ff4d4f", marginLeft: 2 }}>*</span>
     </span>
   );
 }
@@ -61,7 +62,7 @@ export default function ContactForm() {
         <Input size="large" />
       </Form.Item>
       <Form.Item name="message" label="Message">
-        <TextArea rows={5} size="large" />
+        <TextArea rows={10} size="large" />
       </Form.Item>
       <p className="text-xs text-gray-400 mb-4">
         By clicking submit you agree to the terms of use.

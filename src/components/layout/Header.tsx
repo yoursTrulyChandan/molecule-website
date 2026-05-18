@@ -7,7 +7,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { NAV_ITEMS, SITE, type NavItem } from "@/data/site-config";
 
 function NavLink({ item, onClick }: { item: NavItem; onClick?: () => void }) {
-  const cls = "flex items-center gap-1 text-sm text-gray-600 hover:text-brand transition-colors";
+  const cls = "flex items-center gap-1 text-sm text-brand transition-colors";
   if (item.download || item.external) {
     return (
       <a href={item.href} target="_blank" rel="noopener noreferrer" className={cls} onClick={onClick}>
@@ -34,7 +34,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1 font-roboto">
           {NAV_ITEMS.map((item) => (
             <div key={item.label} className="nav-item relative group">
               {item.children ? (
@@ -42,15 +42,15 @@ export default function Header() {
                   {/* Top-level link with animated underline */}
                   <Link
                     href={item.href}
-                    className="nav-top-link flex items-center gap-1.5 px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-brand"
+                    className="nav-top-link flex items-center gap-1.5 px-3 py-2 text-base font-medium uppercase tracking-wide text-brand"
                   >
                     {item.label}
-                    <ChevronDown size={17} strokeWidth={2.8} />
+                    <ChevronDown size={17} height={24} strokeWidth={4} />
                   </Link>
                   {/* Dropdown panel */}
                   <div className="nav-dropdown absolute top-full left-0 mt-0 w-56 bg-white shadow-lg ring-1 ring-black/5 py-1 rounded-b">
                     {item.children.map((child) => (
-                      <div key={child.label} className="px-4 py-2.5">
+                      <div key={child.label} className="text-brand! text-xs font-semibold uppercase text-nowrap px-4 py-2.5">
                         <NavLink item={child} />
                       </div>
                     ))}
@@ -61,14 +61,14 @@ export default function Header() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="nav-top-link px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-brand"
+                  className="nav-top-link px-3 py-2 text-base font-medium uppercase tracking-wide text-brand"
                 >
                   {item.label}
                 </a>
               ) : (
                 <Link
                   href={item.href}
-                  className="nav-top-link px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-brand"
+                  className="nav-top-link px-3 py-2 text-base font-medium uppercase tracking-wide text-brand"
                 >
                   {item.label}
                 </Link>
@@ -85,7 +85,7 @@ export default function Header() {
 
       {/* Mobile nav */}
       {open && (
-        <div className="lg:hidden border-t bg-white max-h-[calc(100vh-64px)] overflow-y-auto">
+        <div className="lg:hidden border-t bg-white max-h-[calc(100vh-64px)] overflow-y-auto font-roboto">
           <div className="px-4 py-3 space-y-1">
             {NAV_ITEMS.map((item) => (
               <div key={item.label}>
