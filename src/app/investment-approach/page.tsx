@@ -29,7 +29,7 @@ export default function InvestmentApproachPage() {
       {/* Page hero */}
       <section className="bg-brand py-16">
         <div className="max-w-350 mx-auto px-6">
-          <h1 className="text-4xl font-light text-white italic">
+          <h1 className="text-5xl font-medium text-white">
             Investment Approach
           </h1>
         </div>
