@@ -13,9 +13,15 @@ export default function InsightsPage() {
   return (
     <>
       {/* Page hero */}
-      <section className="bg-brand py-16">
-        <div className="max-w-350 mx-auto px-6">
-          <h1 className="text-4xl font-light text-white italic">Insights</h1>
+      <section
+        className="relative h-105 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/insights-hero.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="relative z-10 flex items-end h-full max-w-350 mx-auto px-10 pb-10">
+          <h1 className="text-6xl font-medium text-white hero-animate">
+            Insights
+          </h1>
         </div>
       </section>
 
@@ -23,13 +29,17 @@ export default function InsightsPage() {
       <section id="in-the-news" className="py-16">
         <div className="max-w-350 mx-auto px-6">
           <AnimateWhenVisible animation="fade-up">
-            <h2 className="text-4xl font-semibold text-brand mb-10">
+            <h2 className="text-4xl font-normal text-brand mb-10">
               In the News
             </h2>
           </AnimateWhenVisible>
-          <div className="grid sm:grid-cols-2 gap-10 stagger-children">
-            {NEWS_ARTICLES.map((a) => (
-              <AnimateWhenVisible key={a.title} animation="fade-up">
+          <div className="grid sm:grid-cols-2 gap-x-16 gap-y-10">
+            {NEWS_ARTICLES.map((a, i) => (
+              <AnimateWhenVisible
+                key={a.title}
+                animation="fade-up"
+                className={i % 2 === 1 ? "mt-30" : ""}
+              >
                 <NewsCard article={a} />
               </AnimateWhenVisible>
             ))}

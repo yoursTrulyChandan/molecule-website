@@ -33,7 +33,7 @@ export default async function AboutUsPage() {
         className="relative h-105 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/about-hero.jpg')" }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/10" />
         <div className="relative z-10 flex items-end h-full max-w-350 mx-auto px-10 pb-10">
           <h1 className="text-6xl font-light text-white hero-animate">
             About Us

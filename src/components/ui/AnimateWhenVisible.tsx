@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-type AnimationType = "fade-up" | "fade-left" | "fade-right" | "scale";
+type AnimationType = "fade-up" | "fade-down" | "fade-left" | "fade-right" | "scale";
 
 interface Props {
   children: React.ReactNode;

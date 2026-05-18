@@ -35,6 +35,7 @@ body {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .reveal.reveal-fade-up   { transform: translateY(32px); }
+.reveal.reveal-fade-down { transform: translateY(-32px); }
 .reveal.reveal-fade-left { transform: translateX(-32px); }
 .reveal.reveal-fade-right{ transform: translateX(32px); }
 .reveal.reveal-scale     { transform: scale(0.93); }

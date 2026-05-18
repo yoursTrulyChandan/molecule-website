@@ -14,17 +14,17 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     source: "MoneyControl",
   },
   {
+    title: "Top gainers",
+    url: "https://economictimes.indiatimes.com/markets/stocks/news/saurabh-mukherjeas-midcap-fund-worst-performing-pms-of-2022/articleshow/96902016.cms",
+    image: "/images/news/economictimes-2.jpg",
+    source: "Economic Times",
+  },
+  {
     title:
       "Junk index signals exuberance, chemical stocks may fall more: Molecule's Parikh",
     url: "https://www.moneycontrol.com/news/business/markets/junk-index-signals-exuberance-chemical-stocks-may-fall-more-molecules-parikh-12138651.html",
     image: "/images/news/feb-post-1.jpeg",
     source: "MoneyControl",
-  },
-  {
-    title: "Top gainers",
-    url: "https://economictimes.indiatimes.com/markets/stocks/news/saurabh-mukherjeas-midcap-fund-worst-performing-pms-of-2022/articleshow/96902016.cms",
-    image: "/images/news/economictimes-2.jpg",
-    source: "Economic Times",
   },
   {
     title: "Molecule delivered positive return of 3.6%",

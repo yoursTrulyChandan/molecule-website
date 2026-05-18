@@ -27,9 +27,15 @@ export default function InvestmentApproachPage() {
   return (
     <>
       {/* Page hero */}
-      <section className="bg-brand py-16">
-        <div className="max-w-350 mx-auto px-6">
-          <h1 className="text-5xl font-medium text-white">
+      <section
+        className="relative h-105 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/images/investment-approach-hero.jpg')",
+        }}
+      >
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="relative z-10 flex items-end h-full max-w-350 mx-auto px-10 pb-10">
+          <h1 className="text-6xl font-medium text-white hero-animate">
             Investment Approach
           </h1>
         </div>
@@ -37,20 +43,25 @@ export default function InvestmentApproachPage() {
 
       {/* Investment Philosophy */}
       <section id="investment-philosophy" className="py-16">
-        <div className="max-w-350 mx-auto px-6 lg:px-10">
+        <div className="max-w-250 mx-auto px-6 lg:px-10">
           <AnimateWhenVisible animation="fade-up">
             <h2 className="text-5xl font-medium text-brand mb-12">
               Investment Philosophy
             </h2>
           </AnimateWhenVisible>
-          <div className="grid md:grid-cols-3 gap-10 stagger-children">
-            {philosophyItems.map((item) => (
-              <AnimateWhenVisible key={item.title} animation="fade-up">
+          <div className="grid md:grid-cols-3 gap-10 mx-10 stagger-children">
+            {philosophyItems.map((item, index) => (
+              <AnimateWhenVisible
+                key={item.title}
+                animation={index % 2 === 0 ? "fade-up" : "fade-down"}
+              >
                 <div>
                   <h3 className="text-3xl font-medium text-brand mb-4">
                     {item.title}
                   </h3>
-                  <p className="text-xl text-brand leading-relaxed">{item.text}</p>
+                  <p className="text-xl text-brand leading-relaxed">
+                    {item.text}
+                  </p>
                 </div>
               </AnimateWhenVisible>
             ))}
@@ -59,8 +70,8 @@ export default function InvestmentApproachPage() {
       </section>
 
       {/* Portfolio Construction — dark background */}
-      <section id="portfolio-construction" className="bg-dark py-16">
-        <div className="max-w-350 mx-auto px-6 lg:px-10">
+      <section id="portfolio-construction" className="bg-black py-16">
+        <div className="max-w-250 mx-auto px-6 lg:px-10">
           <AnimateWhenVisible animation="fade-up">
             <h2 className="text-4xl font-semibold text-white mb-12">
               Portfolio Construction
@@ -71,41 +82,46 @@ export default function InvestmentApproachPage() {
             {/* Investment Baskets */}
             <AnimateWhenVisible animation="fade-left" className="flex-1">
               <div>
-                <h3 className="text-2xl font-bold text-brand mb-6">
+                <h3 className="text-xl font-bold text-brand mb-6">
                   Investment Baskets
                 </h3>
                 <div className="space-y-8 text-white leading-relaxed">
                   <div>
-                    <p className="font-semibold text-lg mb-1">
+                    <p className="font-bold text-lg mb-1">
                       Secular / Strong Earnings Visibility / Themes:
                     </p>
-                    <p className="text-base">
-                      Companies with earnings visibility beyond 2-3 years –
+                    <p className="text-base leading-loose">
+                      - Companies with earnings visibility beyond 2-3 years –
                       consumption plays/proxies, capex driven plays (with
-                      expanding markets), market leaders in growing markets, etc.
+                      expanding markets), market leaders in growing markets,
+                      etc.
                     </p>
                   </div>
                   <div>
-                    <p className="font-semibold text-lg mb-1">
+                    <p className="font-bold text-lg mb-1">
                       Medium Term / Themes:
                     </p>
-                    <p className="text-base">
-                      Companies with improving earnings outlook for 1-3 years –
-                      cyclical earnings upswing (which could be due to multiple
-                      factors like capex cycle revival, government policy changes,
-                      supply side constraints, etc.)
+                    <p className="text-base leading-loose">
+                      - Companies with improving earnings outlook for 1-3 years
+                      – cyclical earnings upswing (which could be due to
+                      multiple factors like capex cycle revival, government
+                      policy changes, supply side constraints, etc.)
                     </p>
                   </div>
                   <div>
-                    <p className="font-semibold text-lg mb-1">
+                    <p className="font-bold text-lg mb-1">
                       Opportunistic Bets / Market Driven Opportunities:
                     </p>
-                    <p className="text-base">
-                      Delta in earnings due to – balance sheet turnaround,
+                    <p className="text-base leading-loose">
+                      - Delta in earnings due to – balance sheet turnaround,
                       introduction of new product lines, change in business
                       model/management, etc. Market Driven extremes which can
-                      result in – asset-based arbitrage (assets being available at
-                      significant discount to replacement cost).
+                      result in – asset-based arbitrage (assets being available
+                      at significant discount to replacement cost). – During
+                      market extremes on downside, market leaders in asset plays
+                      could be available at steep discount to replacement cost.
+                      Asset based plays can be evaluated much better during such
+                      market extremes.
                     </p>
                   </div>
                 </div>
@@ -115,28 +131,30 @@ export default function InvestmentApproachPage() {
             {/* Capital Allocation */}
             <AnimateWhenVisible animation="fade-right" className="flex-1">
               <div>
-                <h3 className="text-2xl font-bold text-brand mb-6">
+                <h3 className="text-xl font-bold text-brand mb-6">
                   Capital Allocation
                 </h3>
                 <div className="space-y-5 text-white leading-relaxed">
-                  <p className="font-semibold text-lg">Rationale:</p>
-                  <p className="text-base">
-                    Capital allocation is one of the key aspects of portfolio
-                    construct and over time becomes a key differentiator. The way
-                    position is initiated, and thoughtfully scaled up and held,
-                    can make significant difference to the outcome. Each one of
-                    these aspects require thorough thought. Few positions over
-                    time will contribute disproportionately to the portfolio
-                    returns. Ability to Evaluate Risk Reward determines capital
-                    allocation to a particular position.
+                  <p className="font-bold text-lg mb-1">Rationale:</p>
+                  <p className="text-base leading-loose">
+                    - Capital allocation is one of the key aspects of portfolio
+                    construct and over time becomes a key differentiator. <br />
+                    - The way position is initiated, and thoughtfully scaled up
+                    and held, can make significant difference to the outcome.{" "}
+                    <br />
+                    - Each one of these aspects require thorough thought. Few
+                    positions over time will contribute disproportionately to
+                    the portfolio returns. <br />- Ability to Evaluate Risk
+                    Reward determines capital allocation to a particular
+                    position.
                   </p>
-                  <p className="font-semibold text-lg">Allocation:</p>
-                  <p className="text-base">
-                    Core Basket (Secular and Medium Term) will have 75-80%
+                  <p className="font-bold text-lg">Allocation:</p>
+                  <p className="text-base leading-loose">
+                    - Core Basket (Secular and Medium Term) will have 75-80%
                     allocation.
                   </p>
                   <p className="text-base">
-                    Opportunistic/Market Driven will have 20-25% allocation.
+                    - Opportunistic/Market Driven will have 20-25% allocation.
                   </p>
                 </div>
               </div>
@@ -147,9 +165,9 @@ export default function InvestmentApproachPage() {
 
       {/* Investment Process */}
       <section id="investment-process" className="py-16">
-        <div className="max-w-350 mx-auto px-6">
-          <AnimateWhenVisible animation="fade-up">
-            <h2 className="text-4xl font-semibold text-brand mb-10">
+        <div className="max-w-250 mx-auto px-6">
+          <AnimateWhenVisible animation="fade-left">
+            <h2 className="text-4xl font-semibold text-brand mb-10 ml-10">
               Investment Process
             </h2>
           </AnimateWhenVisible>
