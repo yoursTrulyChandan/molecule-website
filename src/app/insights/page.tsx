@@ -48,13 +48,13 @@ export default function InsightsPage() {
       </section>
 
       {/* Newsletters */}
-      <section id="newsletters" className="py-16 border-t border-border">
+      <section id="newsletters" className="py-12">
         <div className="max-w-350 mx-auto px-6">
           <AnimateWhenVisible animation="fade-up">
-            <h2 className="text-4xl font-semibold text-brand mb-6">
+            <h2 className="text-4xl font-normal text-brand mb-6">
               Newsletters
             </h2>
-            <p className="text-brand text-2xl italic font-normal">
+            <p className="text-brand text-xl italic font-normal">
               Coming Soon…
             </p>
           </AnimateWhenVisible>
@@ -62,11 +62,13 @@ export default function InsightsPage() {
       </section>
 
       {/* Blogs */}
-      <section id="blogs" className="py-16 border-t border-border">
+      <section id="blogs" className="py-12">
         <div className="max-w-350 mx-auto px-6">
           <AnimateWhenVisible animation="fade-up">
-            <h2 className="text-4xl font-semibold text-brand mb-6">Blogs</h2>
-            <p className="text-brand text-2xl italic font-normal">Coming Soon…</p>
+            <h2 className="text-4xl font-normal text-brand mb-6">Blogs</h2>
+            <p className="text-brand text-xl italic font-normal">
+              Coming Soon…
+            </p>
           </AnimateWhenVisible>
         </div>
       </section>

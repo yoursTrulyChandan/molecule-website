@@ -54,7 +54,10 @@
     { "month": "Oct'25", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
     { "month": "Nov'25", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
     { "month": "Dec'25", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
-    { "month": "Jan'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 }
+    { "month": "Jan'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
+    { "month": "Feb'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
+    { "month": "Mar'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
+    { "month": "Apr'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 }
   ],
   "scores": [
     { "month": "Sep'23", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
@@ -85,6 +88,9 @@
     { "month": "Oct'25", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
     { "month": "Nov'25", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
     { "month": "Dec'25", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
-    { "month": "Jan'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 }
+    { "month": "Jan'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
+    { "month": "Feb'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
+    { "month": "Mar'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 },
+    { "month": "Apr'26", "pending": 0, "received": 0, "disposed": 0, "unresolved": 0 }
   ]
 }

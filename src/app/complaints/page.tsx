@@ -7,9 +7,15 @@ export default function ComplaintsPage() {
   return (
     <>
       {/* Page hero */}
-      <section className="bg-brand py-16">
-        <div className="max-w-350 mx-auto px-6">
-          <h1 className="text-4xl font-light text-white italic">Complaints</h1>
+      <section
+        className="relative h-105 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/complaints-hero.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative z-10 flex items-end h-full max-w-350 mx-auto px-10 pb-10">
+          <h1 className="text-6xl font-light text-white hero-animate">
+            Complaints
+          </h1>
         </div>
       </section>
 
@@ -29,7 +35,7 @@ export default function ComplaintsPage() {
           <h2 className="text-4xl font-medium text-center text-brand mb-6">
             SCORE Complaint
           </h2>
-          <div className="space-y-4 text-xl text-center text-brand">
+          <div className="space-y-8 text-xl text-center text-brand">
             <p>
               To complaint on the SCORES website click{" "}
               <a

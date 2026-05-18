@@ -91,17 +91,25 @@ export default function Header() {
               <div key={item.label}>
                 {item.children ? (
                   <>
-                    <button
-                      className="flex items-center justify-between w-full px-3 py-2.5 text-sm font-bold text-brand uppercase"
-                      onClick={() => setDropdown(dropdown === item.label ? null : item.label)}
-                    >
-                      {item.label}
-                      <ChevronDown
-                        size={18}
-                        strokeWidth={2.8}
-                        className={`transition-transform ${dropdown === item.label ? "rotate-180" : ""}`}
-                      />
-                    </button>
+                    <div className="flex items-center justify-between w-full px-3 py-2.5">
+                      <Link
+                        href={item.href}
+                        className="text-sm font-bold text-brand uppercase"
+                        onClick={() => setOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                      <button
+                        onClick={() => setDropdown(dropdown === item.label ? null : item.label)}
+                        aria-label="Toggle dropdown"
+                      >
+                        <ChevronDown
+                          size={18}
+                          strokeWidth={2.8}
+                          className={`transition-transform ${dropdown === item.label ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                    </div>
                     {dropdown === item.label && (
                       <div className="ml-4 pl-3 border-l-2 border-brand space-y-1">
                         {item.children.map((child) => (

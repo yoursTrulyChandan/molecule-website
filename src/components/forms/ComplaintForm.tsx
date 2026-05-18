@@ -5,6 +5,14 @@ import { Button, Input, Form, message } from "antd";
 
 const { TextArea } = Input;
 
+function RL({ children }: { children: React.ReactNode }) {
+  return (
+    <span>
+      {children}<sup style={{ color: "#ff4d4f", marginLeft: 2 }}>*</sup>
+    </span>
+  );
+}
+
 export default function ComplaintForm() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -38,7 +46,7 @@ export default function ComplaintForm() {
     >
       <Form.Item
         name="clientName"
-        label="Client Name"
+        label={<RL>Client Name</RL>}
         rules={[{ required: true, message: "Please enter your name" }]}
       >
         <Input size="large" />
@@ -48,7 +56,7 @@ export default function ComplaintForm() {
       </Form.Item>
       <Form.Item
         name="email"
-        label="Registered Email"
+        label={<RL>Registered Email</RL>}
         rules={[
           { required: true, type: "email", message: "Valid email required" },
         ]}
@@ -57,14 +65,14 @@ export default function ComplaintForm() {
       </Form.Item>
       <Form.Item
         name="phone"
-        label="Registered Phone Number"
+        label={<RL>Registered Phone Number</RL>}
         rules={[{ required: true, message: "Please enter the phone number" }]}
       >
         <Input size="large" />
       </Form.Item>
       <Form.Item
         name="issue"
-        label="Kindly describe the issue faced by you"
+        label={<RL>Kindly describe the issue faced by you</RL>}
         rules={[{ required: true, message: "Please describe the issue" }]}
       >
         <TextArea rows={5} size="large" />
