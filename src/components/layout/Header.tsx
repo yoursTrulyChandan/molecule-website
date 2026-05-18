@@ -3,20 +3,23 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown, Download } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { NAV_ITEMS, SITE, type NavItem } from "@/data/site-config";
 
 function NavLink({ item, onClick }: { item: NavItem; onClick?: () => void }) {
-  const cls = "flex items-center gap-1 text-sm text-gray-600 hover:text-[#1e6fad] transition-colors";
+  const cls = "flex items-center gap-1 text-sm text-gray-600 hover:text-brand transition-colors";
   if (item.download || item.external) {
     return (
       <a href={item.href} target="_blank" rel="noopener noreferrer" className={cls} onClick={onClick}>
         {item.label}
-        {item.download && <Download size={13} />}
       </a>
     );
   }
-  return <Link href={item.href} className={cls} onClick={onClick}>{item.label}</Link>;
+  return (
+    <Link href={item.href} className={cls} onClick={onClick}>
+      {item.label}
+    </Link>
+  );
 }
 
 export default function Header() {
@@ -25,24 +28,26 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-      <div className="max-w-[1400px] mx-auto px-6 flex h-16 items-center justify-between">
+      <div className="max-w-350 mx-auto px-6 flex h-16 items-center justify-between">
         <Link href="/">
           <Image src={SITE.logo} alt={SITE.name} width={160} height={40} className="h-6 w-auto" priority />
         </Link>
 
-        {/* Desktop */}
+        {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
           {NAV_ITEMS.map((item) => (
             <div key={item.label} className="nav-item relative group">
               {item.children ? (
                 <>
+                  {/* Top-level link with animated underline */}
                   <Link
                     href={item.href}
-                    className="flex items-center gap-1 px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-[#1e6fad] hover:text-[#185d93] transition-colors"
+                    className="nav-top-link flex items-center gap-1.5 px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-brand"
                   >
                     {item.label}
-                    <ChevronDown size={14} />
+                    <ChevronDown size={17} strokeWidth={2.8} />
                   </Link>
+                  {/* Dropdown panel */}
                   <div className="nav-dropdown absolute top-full left-0 mt-0 w-56 bg-white shadow-lg ring-1 ring-black/5 py-1 rounded-b">
                     {item.children.map((child) => (
                       <div key={child.label} className="px-4 py-2.5">
@@ -56,14 +61,14 @@ export default function Header() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-[#1e6fad] hover:text-[#185d93] transition-colors"
+                  className="nav-top-link px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-brand"
                 >
                   {item.label}
                 </a>
               ) : (
                 <Link
                   href={item.href}
-                  className="px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-[#1e6fad] hover:text-[#185d93] transition-colors"
+                  className="nav-top-link px-3 py-2 text-[13px] font-bold uppercase tracking-wide text-brand"
                 >
                   {item.label}
                 </Link>
@@ -87,14 +92,18 @@ export default function Header() {
                 {item.children ? (
                   <>
                     <button
-                      className="flex items-center justify-between w-full px-3 py-2.5 text-sm font-bold text-[#1e6fad] uppercase"
+                      className="flex items-center justify-between w-full px-3 py-2.5 text-sm font-bold text-brand uppercase"
                       onClick={() => setDropdown(dropdown === item.label ? null : item.label)}
                     >
                       {item.label}
-                      <ChevronDown size={16} className={`transition-transform ${dropdown === item.label ? "rotate-180" : ""}`} />
+                      <ChevronDown
+                        size={18}
+                        strokeWidth={2.8}
+                        className={`transition-transform ${dropdown === item.label ? "rotate-180" : ""}`}
+                      />
                     </button>
                     {dropdown === item.label && (
-                      <div className="ml-4 pl-3 border-l-2 border-[#1e6fad] space-y-1">
+                      <div className="ml-4 pl-3 border-l-2 border-brand space-y-1">
                         {item.children.map((child) => (
                           <div key={child.label} className="py-2">
                             <NavLink item={child} onClick={() => setOpen(false)} />

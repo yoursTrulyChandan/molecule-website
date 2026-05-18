@@ -4,11 +4,11 @@ import type { TeamMember } from "@/data/team";
 
 export default function TeamGrid({ members }: { members: TeamMember[] }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-12">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-12 max-w-250 mx-auto">
       {members.map((m) => (
         <div key={m.name} className="flex flex-col items-center text-center">
           {/* Oval / pill portrait */}
-          <div className="relative w-40 h-52 rounded-t-full rounded-b-full overflow-hidden">
+          <div className="relative w-50 h-72 rounded-t-full rounded-b-full overflow-hidden">
             <Image
               src={m.image}
               alt={m.name}
@@ -18,10 +18,10 @@ export default function TeamGrid({ members }: { members: TeamMember[] }) {
             />
           </div>
 
-          <h4 className="mt-4 text-base font-semibold text-white leading-tight">
+          <h4 className="mt-4 text-lg font-semibold text-white leading-tight">
             {m.name}
           </h4>
-          <p className="mt-0.5 text-sm text-brand">{m.title}</p>
+          <p className="mt-2 text-sm font-bold text-brand">{m.title}</p>
 
           <a
             href={m.linkedin}
@@ -30,7 +30,7 @@ export default function TeamGrid({ members }: { members: TeamMember[] }) {
             className="mt-2"
             aria-label={`${m.name} on LinkedIn`}
           >
-            <LinkedinIcon size={18} className="text-brand hover:text-white transition-colors" />
+            <LinkedinIcon size={18} className="text-brand mt-8 hover:text-white transition-colors" />
           </a>
         </div>
       ))}

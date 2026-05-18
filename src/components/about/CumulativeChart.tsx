@@ -28,29 +28,39 @@ export default function CumulativeChart({ data }: Props) {
 
   return (
     <div className="w-full overflow-x-auto">
-      <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full min-w-175" style={{ fontFamily: "inherit" }}>
+      <div className="flex justify-center items-center gap-6 mb-3">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-[#4285F4]" />
+          <span className="text-base font-semibold text-gray-600">PORTFOLIO</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-[#EA4335]" />
+          <span className="text-base font-semibold text-gray-600">BSE500TRI</span>
+        </div>
+      </div>
+      <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full min-w-120" style={{ fontFamily: "inherit" }}>
         {yTicks.map((t) => (
           <g key={t}>
-            <line x1={padL} y1={y(t)} x2={chartW - padR} y2={y(t)} stroke="#e0e0e0" strokeWidth={1} />
-            <text x={padL - 8} y={y(t) + 4} textAnchor="end" fontSize={12} fill="#888">{t}</text>
+            <line x1={padL} y1={y(t)} x2={chartW - padR} y2={y(t)} stroke="#e0e0e0" strokeWidth={2} />
+            <text x={padL - 8} y={y(t) + 4} textAnchor="end" fontSize={16} fill="#000000">{t}</text>
           </g>
         ))}
 
-        <path d={line("cumPortfolio")} fill="none" stroke="#1e6fad" strokeWidth={2.5} />
+        <path d={line("cumPortfolio")} fill="none" stroke="#4285F4" strokeWidth={5} />
         {data.map((d, i) => (
           <g key={`p-${i}`}>
-            <circle cx={x(i)} cy={y(d.cumPortfolio)} r={4} fill="#1e6fad" />
-            <text x={x(i)} y={y(d.cumPortfolio) - 10} textAnchor="middle" fontSize={10} fill="#1e6fad" fontWeight="bold">
+            <circle cx={x(i)} cy={y(d.cumPortfolio)} r={5} fill="#4285F4" />
+            <text x={x(i)} y={y(d.cumPortfolio) - 10} textAnchor="middle" fontSize={16} fill="#4285F4" fontWeight="bold">
               {d.cumPortfolio}
             </text>
           </g>
         ))}
 
-        <path d={line("cumBenchmark")} fill="none" stroke="#c0392b" strokeWidth={2.5} />
+        <path d={line("cumBenchmark")} fill="none" stroke="#EA4335" strokeWidth={5} />
         {data.map((d, i) => (
           <g key={`b-${i}`}>
-            <circle cx={x(i)} cy={y(d.cumBenchmark)} r={4} fill="#c0392b" />
-            <text x={x(i)} y={y(d.cumBenchmark) + 18} textAnchor="middle" fontSize={10} fill="#c0392b" fontWeight="bold">
+            <circle cx={x(i)} cy={y(d.cumBenchmark)} r={5} fill="#EA4335" />
+            <text x={x(i)} y={y(d.cumBenchmark) + 18} textAnchor="middle" fontSize={16} fill="#EA4335" fontWeight="bold">
               {d.cumBenchmark}
             </text>
           </g>
@@ -62,18 +72,13 @@ export default function CumulativeChart({ data }: Props) {
             x={x(i)}
             y={chartH - padB + 16}
             textAnchor="end"
-            fontSize={10}
-            fill="#888"
+            fontSize={16}
+            fill="#000"
             transform={`rotate(-45, ${x(i)}, ${chartH - padB + 16})`}
           >
             {d.label}
           </text>
         ))}
-
-        <circle cx={padL + w / 2 - 100} cy={16} r={6} fill="#1e6fad" />
-        <text x={padL + w / 2 - 88} y={20} fontSize={12} fill="#333" fontWeight="bold">PORTFOLIO</text>
-        <circle cx={padL + w / 2 + 30} cy={16} r={6} fill="#c0392b" />
-        <text x={padL + w / 2 + 42} y={20} fontSize={12} fill="#333" fontWeight="bold">BSE500TRI</text>
       </svg>
     </div>
   );

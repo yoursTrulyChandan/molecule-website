@@ -15,7 +15,7 @@ export default function QuarterlyChart({ data }: Props) {
   const chartH = 380;
   const padL = 50;
   const padR = 20;
-  const padT = 30;
+  const padT = 10;
   const padB = 80;
   const w = chartW - padL - padR;
   const h = chartH - padT - padB;
@@ -28,15 +28,25 @@ export default function QuarterlyChart({ data }: Props) {
   const zeroY = y(0);
 
   const groupW = w / data.length;
-  const barW = groupW * 0.35;
+  const barW = groupW * 0.25;
 
   return (
     <div className="w-full overflow-x-auto">
-      <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full min-w-175" style={{ fontFamily: "inherit" }}>
+      <div className="flex justify-center items-center gap-6 mb-4">
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded bg-[#4285F4]" />
+          <span className="text-sm font-semibold text-gray-600">PORTFOLIO</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded bg-[#EA4335]" />
+          <span className="text-sm font-semibold text-gray-600">BSE500TRI</span>
+        </div>
+      </div>
+      <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full min-w-120" style={{ fontFamily: "inherit" }}>
         {yTicks.map((t) => (
           <g key={t}>
-            <line x1={padL} y1={y(t)} x2={chartW - padR} y2={y(t)} stroke={t === 0 ? "#333" : "#e0e0e0"} strokeWidth={t === 0 ? 1.5 : 1} />
-            <text x={padL - 8} y={y(t) + 4} textAnchor="end" fontSize={12} fill="#888">{t}</text>
+            <line x1={padL} y1={y(t)} x2={chartW - padR} y2={y(t)} stroke={t === 0 ? "#333" : "#e0e0e0"} strokeWidth={1.5} />
+            <text x={padL - 8} y={y(t) + 4} textAnchor="end" fontSize={16} fill="#000">{t}</text>
           </g>
         ))}
 
@@ -52,13 +62,13 @@ export default function QuarterlyChart({ data }: Props) {
 
           return (
             <g key={i}>
-              <rect x={px} y={pY} width={barW} height={pH} fill="#1e6fad" />
-              <text x={px + barW / 2} y={d.qtrPortfolio >= 0 ? pY - 4 : pY + pH + 12} textAnchor="middle" fontSize={9} fill="#1e6fad" fontWeight="bold">
+              <rect x={px} y={pY} width={barW} height={pH} fill="#4285F4" rx={3} />
+              <text x={px + barW / 2} y={d.qtrPortfolio >= 0 ? pY - 4 : pY + pH + 12} textAnchor="middle" fontSize={14} fill="#4285F4" fontWeight="bold">
                 {d.qtrPortfolio}
               </text>
 
-              <rect x={bx} y={bY} width={barW} height={bH} fill="#c0392b" />
-              <text x={bx + barW / 2} y={d.qtrBenchmark >= 0 ? bY - 4 : bY + bH + 12} textAnchor="middle" fontSize={9} fill="#c0392b" fontWeight="bold">
+              <rect x={bx} y={bY} width={barW} height={bH} fill="#EA4335" rx={3} />
+              <text x={bx + barW / 2} y={d.qtrBenchmark >= 0 ? bY - 4 : bY + bH + 12} textAnchor="middle" fontSize={14} fill="#EA4335" fontWeight="bold">
                 {d.qtrBenchmark}
               </text>
 
@@ -66,8 +76,8 @@ export default function QuarterlyChart({ data }: Props) {
                 x={cx}
                 y={chartH - padB + 16}
                 textAnchor="end"
-                fontSize={10}
-                fill="#888"
+                fontSize={16}
+                fill="#000"
                 transform={`rotate(-45, ${cx}, ${chartH - padB + 16})`}
               >
                 {d.label}
@@ -76,10 +86,6 @@ export default function QuarterlyChart({ data }: Props) {
           );
         })}
 
-        <rect x={padL + w / 2 - 110} y={8} width={14} height={14} fill="#1e6fad" />
-        <text x={padL + w / 2 - 90} y={20} fontSize={12} fill="#333" fontWeight="bold">PORTFOLIO</text>
-        <rect x={padL + w / 2 + 30} y={8} width={14} height={14} fill="#c0392b" />
-        <text x={padL + w / 2 + 50} y={20} fontSize={12} fill="#333" fontWeight="bold">BSE500TRI</text>
       </svg>
     </div>
   );

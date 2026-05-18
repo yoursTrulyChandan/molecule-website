@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --font-abel: var(--abel);
   --color-brand: #1e6fad;
   --color-brand-dark: #185d93;
   --color-dark: #1a1a1a;
@@ -17,16 +18,15 @@ body {
   color: #333;
 }
 
-/* ── Hero load animation ───────────────────────────────────────────── */
-@keyframes hero-fade-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: none; }
+/* ── Hero title: pop-in from own center ───────────────────────────── */
+@keyframes hero-pop-in {
+  0%   { opacity: 0; transform: scale(0); }
+  65%  { transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
 }
-.hero-animate {
-  animation: hero-fade-in 0.9s ease both;
-}
-.hero-animate-delay {
-  animation: hero-fade-in 0.9s ease 0.3s both;
+.hero-pop-in {
+  animation: hero-pop-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  transform-origin: center center;
 }
 
 /* ── Scroll reveal animations ──────────────────────────────────────── */
@@ -52,7 +52,7 @@ body {
 .stagger-children .reveal:nth-child(5) { transition-delay: 0.48s; }
 .stagger-children .reveal:nth-child(6) { transition-delay: 0.60s; }
 
-/* Desktop nav dropdown — CSS-only hover, no JS */
+/* Desktop nav dropdown — CSS-only hover */
 .nav-dropdown {
   opacity: 0;
   visibility: hidden;
@@ -63,4 +63,23 @@ body {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+
+/* Animated underline expanding from center on hover */
+.nav-top-link {
+  position: relative;
+}
+.nav-top-link::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background-color: #1e6fad;
+  transition: left 0.25s ease, right 0.25s ease;
+}
+.nav-item:hover .nav-top-link::after {
+  left: 8px;
+  right: 8px;
 }
