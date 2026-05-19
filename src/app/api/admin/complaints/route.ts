@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionEmail, validateEditPassword } from "@/lib/admin-auth";
+import { getSessionEmail } from "@/lib/admin-auth";
 import { getComplaintData, setComplaintData } from "@/lib/complaints-storage";
 import type { ComplaintRow } from "@/lib/complaints-storage";
 import { revalidatePath } from "next/cache";
@@ -47,8 +47,8 @@ export async function PUT(req: NextRequest) {
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { table, index, row, editPassword }: {
-    table: TableKey; index: number; row: ComplaintRow; editPassword?: string;
+  const { table, index, row }: {
+    table: TableKey; index: number; row: ComplaintRow;
   } = body;
 
   if (table !== "website" && table !== "scores") {
@@ -57,13 +57,6 @@ export async function PUT(req: NextRequest) {
 
   const store = await getComplaintData();
   const arr = store[table];
-  const isCurrentPeriod = index === arr.length - 1;
-
-  if (!isCurrentPeriod) {
-    if (!editPassword || !validateEditPassword(editPassword)) {
-      return NextResponse.json({ error: "Edit password required for past entries" }, { status: 403 });
-    }
-  }
 
   if (index < 0 || index >= arr.length) {
     return NextResponse.json({ error: "Invalid index" }, { status: 400 });
@@ -87,8 +80,8 @@ export async function DELETE(req: NextRequest) {
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { table, index, editPassword }: {
-    table: TableKey; index: number; editPassword?: string;
+  const { table, index }: {
+    table: TableKey; index: number;
   } = body;
 
   if (table !== "website" && table !== "scores") {
@@ -97,13 +90,6 @@ export async function DELETE(req: NextRequest) {
 
   const store = await getComplaintData();
   const arr = store[table];
-  const isCurrentPeriod = index === arr.length - 1;
-
-  if (!isCurrentPeriod) {
-    if (!editPassword || !validateEditPassword(editPassword)) {
-      return NextResponse.json({ error: "Edit password required for past entries" }, { status: 403 });
-    }
-  }
 
   if (index < 0 || index >= arr.length) {
     return NextResponse.json({ error: "Invalid index" }, { status: 400 });

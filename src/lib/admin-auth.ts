@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 
 const ALLOWED_EMAILS = ["chandan@moleculeventures.in", "pranjal@moleculeventures.in"];
 const LOGIN_PASSWORD = "Molecule@2026";
-const EDIT_PASSWORD = "EditMolecule@2026";
 const COOKIE_NAME = "mv_admin_session";
 const TOKEN_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -41,10 +40,6 @@ function verifyToken(token: string): string | null {
 
 export function validateCredentials(email: string, password: string): boolean {
   return ALLOWED_EMAILS.includes(email) && password === LOGIN_PASSWORD;
-}
-
-export function validateEditPassword(password: string): boolean {
-  return password === EDIT_PASSWORD;
 }
 
 export async function createSession(email: string): Promise<void> {

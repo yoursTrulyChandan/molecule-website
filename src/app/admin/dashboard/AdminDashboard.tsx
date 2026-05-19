@@ -34,10 +34,7 @@ export default function AdminDashboard({
       <header className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-20">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/logo.png" alt="Molecule Ventures" className="h-7" />
-            <div className="h-4 w-px bg-gray-200" />
-            <span className="text-sm font-semibold text-brand">Admin</span>
+            <span className="text-lg font-semibold text-brand">Admin</span>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-xs text-gray-400 hidden sm:block">{email}</span>

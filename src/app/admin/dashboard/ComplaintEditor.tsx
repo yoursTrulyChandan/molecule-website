@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ComplaintStore, ComplaintRow } from "@/lib/complaints-storage";
-import { Modal, FieldInput, PasswordField } from "./PerformanceEditor";
+import { Modal, FieldInput } from "./PerformanceEditor";
 
 type TableKey = "website" | "scores";
 
@@ -20,31 +20,24 @@ export default function ComplaintEditor({ initialStore }: { initialStore: Compla
   const [store, setStore] = useState(initialStore);
   const [modal, setModal] = useState<ModalState>({ type: "none" });
   const [formRow, setFormRow] = useState<ComplaintRow>(emptyRow());
-  const [editPassword, setEditPassword] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
   function currentIdx(table: TableKey) {
     return store[table].length - 1;
   }
-  function isPast(table: TableKey, idx: number) {
-    return idx !== currentIdx(table);
-  }
 
   function openAdd(table: TableKey) {
     setFormRow(emptyRow());
-    setEditPassword("");
     setError("");
     setModal({ type: "add", table });
   }
   function openEdit(table: TableKey, idx: number) {
     setFormRow({ ...store[table][idx] });
-    setEditPassword("");
     setError("");
     setModal({ type: "edit", table, index: idx });
   }
   function openDelete(table: TableKey, idx: number) {
-    setEditPassword("");
     setError("");
     setModal({ type: "delete", table, index: idx });
   }
@@ -70,10 +63,10 @@ export default function ComplaintEditor({ initialStore }: { initialStore: Compla
 
       if (modal.type === "edit") {
         method = "PUT";
-        body = { table, index: idx, row: formRow, editPassword: isPast(table, idx) ? editPassword : undefined };
+        body = { table, index: idx, row: formRow };
       } else if (modal.type === "delete") {
         method = "DELETE";
-        body = { table, index: idx, editPassword: isPast(table, idx) ? editPassword : undefined };
+        body = { table, index: idx };
       }
 
       const res = await fetch("/api/admin/complaints", {
@@ -146,9 +139,6 @@ export default function ComplaintEditor({ initialStore }: { initialStore: Compla
           )}
           {modal.type === "delete" && (
             <p className="text-sm text-gray-600">Are you sure you want to delete this entry? This cannot be undone.</p>
-          )}
-          {modal.type !== "add" && isPast(modalTable, modalIdx) && (
-            <PasswordField value={editPassword} onChange={setEditPassword} />
           )}
         </Modal>
       )}

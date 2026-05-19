@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionEmail, validateEditPassword } from "@/lib/admin-auth";
+import { getSessionEmail } from "@/lib/admin-auth";
 import { getPerformanceData, setPerformanceData } from "@/lib/performance-storage";
 import type { PerformanceEntry } from "@/lib/performance-storage";
 import { revalidatePath } from "next/cache";
@@ -12,9 +12,11 @@ async function requireAuth() {
 
 function lastDayOfPrevMonth(): string {
   const now = new Date();
-  // new Date(year, month, 0) = last day of previous month
   const last = new Date(now.getFullYear(), now.getMonth(), 0);
-  return last.toISOString().slice(0, 10);
+  const y = last.getFullYear();
+  const m = String(last.getMonth() + 1).padStart(2, "0");
+  const d = String(last.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 }
 
 export async function GET() {
@@ -52,20 +54,12 @@ export async function PUT(req: NextRequest) {
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { index, entry, editPassword } = body as {
+  const { index, entry } = body as {
     index: number;
     entry: PerformanceEntry;
-    editPassword?: string;
   };
 
   const store = await getPerformanceData();
-  const isCurrentPeriod = index === store.data.length - 1;
-
-  if (!isCurrentPeriod) {
-    if (!editPassword || !validateEditPassword(editPassword)) {
-      return NextResponse.json({ error: "Edit password required for past periods" }, { status: 403 });
-    }
-  }
 
   if (index < 0 || index >= store.data.length) {
     return NextResponse.json({ error: "Invalid index" }, { status: 400 });
@@ -90,16 +84,9 @@ export async function DELETE(req: NextRequest) {
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { index, editPassword } = body as { index: number; editPassword?: string };
+  const { index } = body as { index: number };
 
   const store = await getPerformanceData();
-  const isCurrentPeriod = index === store.data.length - 1;
-
-  if (!isCurrentPeriod) {
-    if (!editPassword || !validateEditPassword(editPassword)) {
-      return NextResponse.json({ error: "Edit password required for past periods" }, { status: 403 });
-    }
-  }
 
   if (index < 0 || index >= store.data.length) {
     return NextResponse.json({ error: "Invalid index" }, { status: 400 });
