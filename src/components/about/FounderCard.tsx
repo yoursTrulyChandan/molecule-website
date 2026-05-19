@@ -16,7 +16,7 @@ export default function FounderCard({ founder }: { founder: TeamMember }) {
       </div>
 
       {/* Name + title + LinkedIn — grey strip */}
-      <div className="flex flex-col justify-center px-8 py-6 bg-[#f4f4f4] w-80 h-[250px] flex-shrink-0">
+      <div className="flex flex-col sm:justify-center px-8 py-10 sm:py-6 bg-[#f4f4f4] sm:w-80 h-[250px] flex-shrink-0">
         <h3 className="text-2xl font-semibold text-brand leading-tight">
           {founder.name}
         </h3>
@@ -25,7 +25,7 @@ export default function FounderCard({ founder }: { founder: TeamMember }) {
           href={founder.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-flex"
+          className="mt-10 sm:mt-5 inline-flex"
           aria-label={`${founder.name} on LinkedIn`}
         >
           <Image src="/images/linkedin.png" alt="LinkedIn" width={30} height={30} />
@@ -34,7 +34,7 @@ export default function FounderCard({ founder }: { founder: TeamMember }) {
 
       {/* Bio */}
       {founder.bio && (
-        <div className="flex items-center px-8 lg:px-12">
+        <div className="flex items-center sm:px-8 lg:px-12 mt-16 sm:mt-0">
           <p className="text-brand text-xl leading-relaxed text-justify">
             {founder.bio}
           </p>

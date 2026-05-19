@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { FOUNDERS, TEAM_MEMBERS } from "@/data/team";
 import FounderCard from "@/components/about/FounderCard";
 import TeamGrid from "@/components/about/TeamGrid";
@@ -29,13 +30,18 @@ export default async function AboutUsPage() {
   return (
     <>
       {/* Hero */}
-      <section
-        className="relative h-105 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/about-hero.jpg')" }}
-      >
+      <section className="relative">
+        <Image
+          src="/images/about-hero.jpg"
+          alt="About Us"
+          width={1920}
+          height={800}
+          className="w-full h-auto sm:h-105 sm:object-cover object-center"
+          priority
+        />
         <div className="absolute inset-0 bg-black/10" />
-        <div className="relative z-10 flex items-end h-full max-w-350 mx-auto px-10 pb-10">
-          <h1 className="text-6xl font-light text-white hero-animate">
+        <div className="absolute inset-0 z-10 flex items-center justify-center sm:items-end sm:justify-start max-w-350 mx-auto px-10 pb-0 sm:pb-10">
+          <h1 className="text-6xl font-light text-white hero-animate text-center sm:text-left">
             About Us
           </h1>
         </div>
@@ -43,17 +49,17 @@ export default async function AboutUsPage() {
 
       {/* Company intro */}
       <section className="bg-cream py-16">
-        <div className="max-w-220 mx-auto px-6">
+        <div className="max-w-220 mx-auto px-2 sm:px-6">
           <div className="flex flex-col lg:flex-row gap-1">
             <AnimateWhenVisible animation="fade-left" className="">
-              <h2 className="text-4xl font-semibold text-brand text-nowrap">
+              <h2 className="text-4xl font-semibold text-brand text-nowrap ml-4 sm:ml-0 mb-8 sm:mb-0">
                 Molecule Ventures
               </h2>
             </AnimateWhenVisible>
             <AnimateWhenVisible animation="fade-right" className="">
               <div>
-                <div className="border-t-4 border-black mb-8 max-w-96 ml-auto" />
-                <div className="space-y-5 mt-18 text-brand leading-relaxed text-left">
+                <div className="border-t-4 border-black mb-8 max-w-full sm:max-w-96 ml-auto" />
+                <div className="space-y-5 mt-18 text-brand leading-relaxed text-left mx-4 sm:mx-0">
                   <p className="text-lg">
                     Molecule Ventures is a Portfolio Management Services company
                     registered under Securities and Exchange Board of India.
@@ -72,8 +78,8 @@ export default async function AboutUsPage() {
       </section>
 
       {/* Dark emphasis */}
-      <section className="bg-dark py-20">
-        <div className="max-w-350 mx-auto px-16">
+      <section className="bg-dark py-12 sm:py-20">
+        <div className="max-w-350 mx-auto px-10 sm:px-16">
           <AnimateWhenVisible animation="fade-up" threshold={0.2}>
             <p className="text-2xl lg:text-3xl text-white leading-relaxed">
               We aim to benefit by investing in companies with strong growth
@@ -89,7 +95,7 @@ export default async function AboutUsPage() {
       <section id="founders" className="py-12">
         <div className="max-w-350 mx-auto px-6 lg:px-16">
           <AnimateWhenVisible animation="fade-up">
-            <h2 className="text-4xl font-semibold text-brand mb-20">
+            <h2 className="text-4xl font-semibold text-brand ml-10 sm:ml-0 mb-20">
               Founders
             </h2>
           </AnimateWhenVisible>
@@ -129,7 +135,7 @@ export default async function AboutUsPage() {
 
           <div className="mb-16">
             <AnimateWhenVisible animation="fade-up">
-              <h3 className="text-xl md:text-2xl lg:text-4xl text-gray-500 mb-8 ml-2 md:ml-10">
+              <h3 className="text-xl md:text-2xl lg:text-4xl text-gray-500 mb-4 sm:mb-8 ml-2 md:ml-10">
                 Cumulative Performance
               </h3>
             </AnimateWhenVisible>
@@ -143,7 +149,7 @@ export default async function AboutUsPage() {
 
           <div>
             <AnimateWhenVisible animation="fade-up">
-              <h3 className="text-xl md:text-2xl lg:text-4xl text-gray-500 mb-8 ml-2 md:ml-10">
+              <h3 className="text-xl md:text-2xl lg:text-4xl text-gray-500 mb-4 sm:mb-8 ml-2 md:ml-10">
                 Quarterly Performance
               </h3>
             </AnimateWhenVisible>

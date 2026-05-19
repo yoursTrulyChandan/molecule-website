@@ -4,11 +4,11 @@ import { SITE } from "@/data/site-config";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#f4f4f4] h-40 md:h-60 flex items-center">
-      <div className="max-w-[1400px] mx-auto px-6 w-full">
+    <footer className="bg-[#f4f4f4] py-8 md:h-60 flex items-center">
+      <div className="max-w-350 mx-auto px-6 w-full">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="shrink-0">
             <Image
               src={SITE.logo}
               alt={SITE.name}

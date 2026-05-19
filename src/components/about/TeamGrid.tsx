@@ -7,7 +7,7 @@ export default function TeamGrid({ members }: { members: TeamMember[] }) {
       {members.map((m) => (
         <div key={m.name} className="flex flex-col items-center text-center">
           {/* Oval / pill portrait */}
-          <div className="relative w-50 h-72 rounded-t-full rounded-b-full overflow-hidden">
+          <div className="relative w-80 h-120 sm:w-50 sm:h-72 rounded-t-full rounded-b-full overflow-hidden">
             <Image
               src={m.image}
               alt={m.name}

@@ -30,15 +30,15 @@ export default function CumulativeChart({ data }: Props) {
     <div className="w-full overflow-x-auto">
       <div className="flex justify-center items-center gap-6 mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-[#4285F4]" />
-          <span className="text-base font-semibold text-gray-600">PORTFOLIO</span>
+          <div className="w-3 sm:w-6 h-3 sm:h-6 rounded-full bg-[#4285F4]" />
+          <span className="text-sm sm:text-base sm:font-semibold text-gray-600">PORTFOLIO</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-[#EA4335]" />
-          <span className="text-base font-semibold text-gray-600">BSE500TRI</span>
+          <div className="w-3 sm:w-6 h-3 sm:h-6 rounded-full bg-[#EA4335]" />
+          <span className="text-sm sm:text-base sm:font-semibold text-gray-600">BSE500TRI</span>
         </div>
       </div>
-      <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full min-w-120" style={{ fontFamily: "inherit" }}>
+      <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full min-w-full sm:min-w-120" style={{ fontFamily: "inherit" }}>
         {yTicks.map((t) => (
           <g key={t}>
             <line x1={padL} y1={y(t)} x2={chartW - padR} y2={y(t)} stroke="#e0e0e0" strokeWidth={2} />
