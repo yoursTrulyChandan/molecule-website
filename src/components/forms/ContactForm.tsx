@@ -64,7 +64,7 @@ export default function ContactForm() {
       <Form.Item name="message" label="Message">
         <TextArea rows={10} size="large" />
       </Form.Item>
-      <p className="text-xs text-gray-400 mb-4">
+      <p className="text-xl text-brand mb-10">
         By clicking submit you agree to the terms of use.
       </p>
       <Form.Item>
@@ -73,7 +73,7 @@ export default function ContactForm() {
           htmlType="submit"
           size="large"
           loading={loading}
-          className="bg-[#32373C]! px-10"
+          className="bg-[#32373C]! px-10 rounded-sm!"
         >
           Submit
         </Button>
@@ -82,7 +82,13 @@ export default function ContactForm() {
       <style jsx global>{`
         .contact-form .ant-form-item-label > label {
           color: #1e6fad !important;
-          font-size: 1rem !important;
+          font-size: 1.2rem !important;
+        }
+        .contact-form .ant-input,
+        .contact-form .ant-input-affix-wrapper,
+        .contact-form textarea.ant-input {
+          border-color: #1e6fad !important;
+          background-color: transparent !important;
         }
       `}</style>
     </Form>

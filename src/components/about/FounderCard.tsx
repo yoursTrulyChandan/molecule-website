@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { LinkedinIcon } from "lucide-react";
 import type { TeamMember } from "@/data/team";
 
 export default function FounderCard({ founder }: { founder: TeamMember }) {
@@ -29,7 +28,7 @@ export default function FounderCard({ founder }: { founder: TeamMember }) {
           className="mt-5 inline-flex"
           aria-label={`${founder.name} on LinkedIn`}
         >
-          <LinkedinIcon size={22} className="text-brand hover:text-brand-dark transition-colors" />
+          <Image src="/images/linkedin.png" alt="LinkedIn" width={30} height={30} />
         </a>
       </div>
 

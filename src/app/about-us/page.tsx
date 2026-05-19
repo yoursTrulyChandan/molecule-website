@@ -157,6 +157,13 @@ export default async function AboutUsPage() {
               <p className="text-brand font-bold">
                 *Returns are after deducting annual performance fees
               </p>
+              <p className="text-brand font-bold">
+                *The returns mentioned are Time-Weighted Rate of Return.
+              </p>
+              <p className="text-brand font-bold">
+                Disclaimer: Performance-related information provided herein is
+                not verified by SEBI.
+              </p>
             </div>
           </div>
         </div>

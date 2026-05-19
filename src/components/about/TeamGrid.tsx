@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { LinkedinIcon } from "lucide-react";
 import type { TeamMember } from "@/data/team";
 
 export default function TeamGrid({ members }: { members: TeamMember[] }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-12 max-w-250 mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-10 gap-y-20 max-w-250 mx-auto">
       {members.map((m) => (
         <div key={m.name} className="flex flex-col items-center text-center">
           {/* Oval / pill portrait */}
@@ -27,10 +26,10 @@ export default function TeamGrid({ members }: { members: TeamMember[] }) {
             href={m.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2"
+            className="mt-8"
             aria-label={`${m.name} on LinkedIn`}
           >
-            <LinkedinIcon size={18} className="text-brand mt-8 hover:text-white transition-colors" />
+            <Image src="/images/linkedin.png" alt="LinkedIn" width={32} height={32} />
           </a>
         </div>
       ))}

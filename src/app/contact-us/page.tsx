@@ -13,7 +13,7 @@ export default function ContactUsPage() {
         className="relative h-105 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/contact-hero.jpg')" }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/10" />
         <div className="relative z-10 flex items-end h-full max-w-350 mx-auto px-10 pb-10">
           <h1 className="text-6xl font-light text-white hero-animate">
             Contact Us
@@ -23,18 +23,18 @@ export default function ContactUsPage() {
 
       {/* Office info + Map */}
       <section className="py-16">
-        <div className="max-w-350 mx-auto px-6 lg:px-10 flex flex-col lg:flex-row gap-12">
+        <div className="max-w-300 mx-auto px-6 lg:px-10 flex flex-col lg:flex-row gap-12">
 
           {/* Left: office details */}
           <div className="lg:w-1/3">
-            <h2 className="text-3xl font-semibold text-brand mb-6">
+            <h2 className="text-4xl font-normal text-brand mb-6">
               Corporate Office
             </h2>
 
             {SITE.offices.map((o) => (
               <div key={o.city} className="mb-6">
                 {o.lines.map((line, i) => (
-                  <p key={i} className="text-brand leading-relaxed">{line}</p>
+                  <p key={i} className="text-brand text-base leading-relaxed">{line}</p>
                 ))}
               </div>
             ))}
@@ -62,7 +62,7 @@ export default function ContactUsPage() {
                 href={SITE.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 bg-brand flex items-center justify-center text-white hover:opacity-80 transition-opacity"
+                className="w-9 h-9 bg-brand rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
                 aria-label="LinkedIn"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -73,7 +73,7 @@ export default function ContactUsPage() {
                 href={SITE.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 bg-brand flex items-center justify-center text-white hover:opacity-80 transition-opacity"
+                className="w-9 h-9 bg-brand rounded-full flex items-center justify-center text-white hover:opacity-80 transition-opacity"
                 aria-label="Twitter"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -99,13 +99,19 @@ export default function ContactUsPage() {
         </div>
       </section>
 
-      {/* Contact form — full width */}
-      <section className="py-16 border-t border-gray-200">
-        <div className="max-w-2xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold text-brand mb-8">
-            Send a direct message
-          </h2>
-          <ContactForm />
+      {/* Contact form — light gray background, matching live site */}
+      <section className="bg-[#f4f4f4] py-20">
+        <div className="max-w-300 mx-auto px-6 lg:px-10">
+          {/* Heading spans ~50% width on desktop */}
+          <div className="lg:w-1/2 mb-20">
+            <h2 className="text-4xl font-normal text-brand">
+              Send a direct message
+            </h2>
+          </div>
+          {/* Form spans ~68% width on desktop */}
+          <div className="lg:w-8/12">
+            <ContactForm />
+          </div>
         </div>
       </section>
     </>
