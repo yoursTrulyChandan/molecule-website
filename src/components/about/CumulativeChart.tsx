@@ -50,7 +50,7 @@ export default function CumulativeChart({ data }: Props) {
         {data.map((d, i) => (
           <g key={`p-${i}`}>
             <circle cx={x(i)} cy={y(d.cumPortfolio)} r={5} fill="#4285F4" />
-            <text x={x(i)} y={y(d.cumPortfolio) - 10} textAnchor="middle" fontSize={16} fill="#4285F4" fontWeight="bold">
+            <text x={x(i)} y={y(d.cumPortfolio) - 18} textAnchor="middle" fontSize={16} fill="#4285F4" fontWeight="bold" stroke="white" strokeWidth={4} paintOrder="stroke">
               {d.cumPortfolio}
             </text>
           </g>
@@ -60,7 +60,7 @@ export default function CumulativeChart({ data }: Props) {
         {data.map((d, i) => (
           <g key={`b-${i}`}>
             <circle cx={x(i)} cy={y(d.cumBenchmark)} r={5} fill="#EA4335" />
-            <text x={x(i)} y={y(d.cumBenchmark) + 18} textAnchor="middle" fontSize={16} fill="#EA4335" fontWeight="bold">
+            <text x={x(i)} y={y(d.cumBenchmark) + 26} textAnchor="middle" fontSize={16} fill="#EA4335" fontWeight="bold" stroke="white" strokeWidth={4} paintOrder="stroke">
               {d.cumBenchmark}
             </text>
           </g>

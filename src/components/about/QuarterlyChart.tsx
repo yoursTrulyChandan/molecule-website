@@ -63,12 +63,12 @@ export default function QuarterlyChart({ data }: Props) {
           return (
             <g key={i}>
               <rect x={px} y={pY} width={barW} height={pH} fill="#4285F4" rx={3} />
-              <text x={px + barW / 2} y={d.qtrPortfolio >= 0 ? pY - 4 : pY + pH + 12} textAnchor="middle" fontSize={14} fill="#4285F4" fontWeight="bold">
+              <text x={px + barW / 2} y={d.qtrPortfolio >= 0 ? pY - 12 : pY + pH + 18} textAnchor="middle" fontSize={14} fill="#4285F4" fontWeight="bold" stroke="white" strokeWidth={4} paintOrder="stroke">
                 {d.qtrPortfolio}
               </text>
 
               <rect x={bx} y={bY} width={barW} height={bH} fill="#EA4335" rx={3} />
-              <text x={bx + barW / 2} y={d.qtrBenchmark >= 0 ? bY - 4 : bY + bH + 12} textAnchor="middle" fontSize={14} fill="#EA4335" fontWeight="bold">
+              <text x={bx + barW / 2} y={d.qtrBenchmark >= 0 ? bY - 12 : bY + bH + 18} textAnchor="middle" fontSize={14} fill="#EA4335" fontWeight="bold" stroke="white" strokeWidth={4} paintOrder="stroke">
                 {d.qtrBenchmark}
               </text>
 
