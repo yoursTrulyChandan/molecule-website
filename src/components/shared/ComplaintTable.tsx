@@ -11,7 +11,7 @@ const HEADERS = [
 export default function ComplaintTable({ title, data }: { title: string; data: ComplaintRow[] }) {
   return (
     <div>
-      <h2 className="text-4xl font-normal text-brand mb-6">{title}</h2>
+      <h2 className="text-[28px] sm:text-4xl font-normal text-brand mb-10 sm:mb-6">{title}</h2>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-sm text-brand">
           <thead>

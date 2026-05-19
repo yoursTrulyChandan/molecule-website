@@ -32,7 +32,7 @@ export default function ContactUsPage() {
         <div className="max-w-300 mx-auto px-6 lg:px-10 flex flex-col lg:flex-row gap-12">
 
           {/* Left: office details */}
-          <div className="lg:w-1/3">
+          <div className="lg:w-1/3 px-4 sm:px-0">
             <h2 className="text-4xl font-normal text-brand mb-6">
               Corporate Office
             </h2>
@@ -40,7 +40,7 @@ export default function ContactUsPage() {
             {SITE.offices.map((o) => (
               <div key={o.city} className="mb-6">
                 {o.lines.map((line, i) => (
-                  <p key={i} className="text-brand text-base leading-relaxed">{line}</p>
+                  <p key={i} className="text-brand text-lg leading-relaxed">{line}</p>
                 ))}
               </div>
             ))}
@@ -48,16 +48,16 @@ export default function ContactUsPage() {
             <div className="space-y-3 mt-2">
               <a
                 href={`mailto:${SITE.email}`}
-                className="flex items-center gap-2 text-brand hover:opacity-75 transition-opacity"
+                className="flex items-center gap-2 text-brand font-medium text-xl sm:text-lg hover:opacity-75 transition-opacity underline hover:text-yellow-500"
               >
-                <Mail size={17} />
+                <Mail size={20} />
                 {SITE.email}
               </a>
               <a
                 href={`tel:${SITE.phone.replace(/\s/g, "")}`}
-                className="flex items-center gap-2 text-brand hover:opacity-75 transition-opacity"
+                className="flex items-center gap-2 text-brand font-medium text-xl sm:text-lg hover:opacity-75 transition-opacity underline hover:text-yellow-500"
               >
-                <Phone size={17} />
+                <Phone size={20} />
                 {SITE.phone}
               </a>
             </div>

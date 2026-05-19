@@ -38,7 +38,7 @@ export default function ComplaintsPage() {
       {/* SCORES section */}
       <section className="py-16 border-t border-border">
         <div className="max-w-350 mx-auto px-6">
-          <h2 className="text-4xl font-medium text-center text-brand mb-6">
+          <h2 className="text-4xl font-normal text-center text-brand mb-8">
             SCORE Complaint
           </h2>
           <div className="space-y-8 text-xl text-center text-brand">
@@ -48,7 +48,7 @@ export default function ComplaintsPage() {
                 href="https://scores.sebi.gov.in/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold hover:underline"
+                className="font-bold underline hover:text-yellow-500"
               >
                 Here
               </a>
@@ -59,7 +59,7 @@ export default function ComplaintsPage() {
                 href="https://smartodr.in/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold hover:underline"
+                className="font-bold underline hover:text-yellow-500"
               >
                 Here
               </a>
@@ -70,7 +70,7 @@ export default function ComplaintsPage() {
                 href="https://apps.apple.com/in/app/sebiscores/id6478849917"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold hover:underline"
+                className="font-bold underline hover:text-yellow-500"
               >
                 Apple
               </a>
@@ -79,7 +79,7 @@ export default function ComplaintsPage() {
                 href="https://play.google.com/store/apps/details?id=com.sebi&hl=en_IN"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold hover:underline"
+                className="font-bold underline hover:text-yellow-500"
               >
                 Android
               </a>
