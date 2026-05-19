@@ -25,7 +25,7 @@ export default function InsightsPage() {
         />
         <div className="absolute inset-0 bg-black/10" />
         <div className="absolute inset-0 z-10 flex items-center justify-center sm:items-end sm:justify-start max-w-350 mx-auto px-10 pb-0 sm:pb-10">
-          <h1 className="text-4xl sm:text-6xl font-medium text-white hero-animate text-center sm:text-left">
+          <h1 className="text-4xl sm:text-6xl font-normal text-white hero-animate text-center sm:text-left">
             Insights
           </h1>
         </div>
