@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import ComplaintTable from "@/components/shared/ComplaintTable";
 import { getComplaintData } from "@/lib/complaints-storage";
 
@@ -11,13 +12,18 @@ export default async function ComplaintReportPage() {
 
   return (
     <>
-      <section
-        className="relative h-105 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/complaint-report-hero.jpg')" }}
-      >
+      <section className="relative">
+        <Image
+          src="/images/complaint-report-hero.jpg"
+          alt="Complaint Report"
+          width={1920}
+          height={800}
+          className="w-full h-auto sm:h-105 sm:object-cover object-center"
+          priority
+        />
         <div className="absolute inset-0 bg-black/10" />
-        <div className="relative z-10 flex items-end h-full max-w-350 mx-auto px-10 pb-10">
-          <h1 className="text-6xl font-light text-white hero-animate">
+        <div className="absolute inset-0 z-10 flex items-center justify-center sm:items-end sm:justify-start max-w-350 mx-auto px-10 pb-0 sm:pb-10">
+          <h1 className="text-4xl sm:text-6xl font-light text-white hero-animate text-center sm:text-left">
             Complaint Report
           </h1>
         </div>

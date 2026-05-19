@@ -11,15 +11,18 @@ export const metadata: Metadata = {
 const philosophyItems = [
   {
     title: "Non-Linearity",
-    text: "Listed market continually offers non linear opportunities. Every few years, market tends to swing from under-valuation to over-valuation and vice-versa. Stock prices are slaves to earnings in the long-run but journey is never linear. Hence the opportunity.",
+    text: [
+      "Listed market continually offers non linear opportunities. Every few years, market tends to swing from under-valuation to over-valuation and vice-versa.",
+      "Stock prices are slaves to earnings in the long-run but journey is never linear. Hence the opportunity.",
+    ],
   },
   {
     title: "Longevity",
-    text: "Survival in the market in the long run is key to success. Focus on risk ensures ability to survive.",
+    text: ["Survival in the market in the long run is key to success. Focus on risk ensures ability to survive."],
   },
   {
     title: "Compounding",
-    text: "Investment strategy aims to benefit from the long-term compounding effect on investments done in good businesses, run by great business managers.",
+    text: ["Investment strategy aims to benefit from the long-term compounding effect on investments done in good businesses, run by great business managers."],
   },
 ];
 
@@ -27,15 +30,18 @@ export default function InvestmentApproachPage() {
   return (
     <>
       {/* Page hero */}
-      <section
-        className="relative h-105 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/images/investment-approach-hero.jpg')",
-        }}
-      >
+      <section className="relative">
+        <Image
+          src="/images/investment-approach-hero.jpg"
+          alt="Investment Approach"
+          width={1920}
+          height={800}
+          className="w-full h-auto sm:h-105 sm:object-cover object-center"
+          priority
+        />
         <div className="absolute inset-0 bg-black/10" />
-        <div className="relative z-10 flex items-end h-full max-w-350 mx-auto px-10 pb-10">
-          <h1 className="text-6xl font-medium text-white hero-animate">
+        <div className="absolute inset-0 z-10 flex items-center justify-center sm:items-end sm:justify-start max-w-350 mx-auto px-10 pb-0 sm:pb-10">
+          <h1 className="text-4xl sm:text-6xl font-medium text-white hero-animate text-center sm:text-left">
             Investment Approach
           </h1>
         </div>
@@ -45,11 +51,11 @@ export default function InvestmentApproachPage() {
       <section id="investment-philosophy" className="py-16">
         <div className="max-w-250 mx-auto px-6 lg:px-10">
           <AnimateWhenVisible animation="fade-up">
-            <h2 className="text-5xl font-medium text-brand mb-12">
+            <h2 className="text-3xl sm:text-5xl font-medium text-brand mb-12">
               Investment Philosophy
             </h2>
           </AnimateWhenVisible>
-          <div className="grid md:grid-cols-3 gap-10 mx-10 stagger-children">
+          <div className="grid md:grid-cols-3 gap-20 sm:mx-10 stagger-children">
             {philosophyItems.map((item, index) => (
               <AnimateWhenVisible
                 key={item.title}
@@ -59,9 +65,11 @@ export default function InvestmentApproachPage() {
                   <h3 className="text-3xl font-medium text-brand mb-4">
                     {item.title}
                   </h3>
-                  <p className="text-xl text-brand leading-relaxed">
-                    {item.text}
-                  </p>
+                  <div className="space-y-4">
+                    {item.text.map((para, i) => (
+                      <p key={i} className="font-normal text-xl text-brand leading-normal text-justify">{para}</p>
+                    ))}
+                  </div>
                 </div>
               </AnimateWhenVisible>
             ))}
@@ -165,9 +173,9 @@ export default function InvestmentApproachPage() {
 
       {/* Investment Process */}
       <section id="investment-process" className="py-16">
-        <div className="max-w-250 mx-auto px-6">
+        <div className="max-w-250 mx-auto px-1 sm:px-6">
           <AnimateWhenVisible animation="fade-left">
-            <h2 className="text-4xl font-semibold text-brand mb-10 ml-10">
+            <h2 className="text-4xl font-semibold text-brand mb-10 sm:ml-10">
               Investment Process
             </h2>
           </AnimateWhenVisible>
