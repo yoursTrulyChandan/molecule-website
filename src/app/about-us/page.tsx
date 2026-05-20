@@ -110,10 +110,10 @@ export default async function AboutUsPage() {
       </section>
 
       {/* Research Team */}
-      <section id="team" className="bg-dark py-16">
-        <div className="max-w-250 mx-auto px-6">
+      <section id="team" className="bg-black py-16">
+        <div className="max-w-250 mx-auto px-10 lg:px-16">
           <AnimateWhenVisible animation="fade-left">
-            <h2 className="text-3xl text-white mb-12">
+            <h2 className="text-4xl text-white mb-12 font-normal">
               Research <span className="font-bold">Team</span>
             </h2>
           </AnimateWhenVisible>

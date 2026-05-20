@@ -29,7 +29,7 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="max-w-350 mx-auto px-6 flex h-16 items-center justify-between">
+        <div className="max-w-350 mx-auto px-6 flex h-15 items-center justify-between">
           <Link href="/">
             <Image src={SITE.logo} alt={SITE.name} width={160} height={40} className="h-4 lg:h-6 w-auto" priority />
           </Link>
