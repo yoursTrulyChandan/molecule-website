@@ -27,7 +27,7 @@ export default function TypewriterText() {
   }, [started, displayed]);
 
   return (
-    <p className="text-lg sm:text-xl italic font-semibold text-center max-w-130 text-brand">
+    <p className="text-lg sm:text-xl italic font-semibold text-center max-w-130 text-brand leading-[1.1]">
       {displayed}
     </p>
   );

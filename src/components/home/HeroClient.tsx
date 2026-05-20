@@ -2,23 +2,34 @@
 
 import dynamic from "next/dynamic";
 
-const GlobeCanvas = dynamic(() => import("./GlobeCanvas"), { ssr: false });
 const TypewriterText = dynamic(() => import("./TypewriterText"), { ssr: false });
 
 export default function HeroClient() {
   return (
-    <div style={{ display: "flex", width: "100%", height: "100%" }}>
+    <div style={{ position: "relative", display: "flex", width: "100%", height: "100%", overflow: "hidden" }}>
 
-      {/* Left half: rotating globe */}
-      <div style={{
-        width: "50%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}>
-        <GlobeCanvas />
-      </div>
+      {/* Full-width background video (the molecule animation) */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "left center",
+          zIndex: 0,
+        }}
+      >
+        <source src="/video/hero-bg.m4v" type="video/mp4" />
+      </video>
+
+      {/* Left half: transparent — video shows through */}
+      <div style={{ width: "50%", height: "100%", position: "relative", zIndex: 1 }} />
 
       {/* Right half: title + typewriter */}
       <div style={{
@@ -30,9 +41,11 @@ export default function HeroClient() {
         justifyContent: "center",
         gap: "2rem",
         paddingRight: "4rem",
+        position: "relative",
+        zIndex: 1,
       }}>
 
-        {/* Title — pops in from its own center */}
+        {/* Title */}
         <div className="hero-pop-in" style={{ textAlign: "center", display: "flex", alignItems: "center", gap: "1rem" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
