@@ -41,6 +41,7 @@ export async function POST(req: NextRequest) {
   };
 
   const store = await getPerformanceData();
+  entry.updatedAt = lastDayOfPrevMonth();
   store.data.push(entry);
   store.updatedAt = lastDayOfPrevMonth();
 
@@ -71,6 +72,7 @@ export async function PUT(req: NextRequest) {
     cumBenchmark: Number(entry.cumBenchmark),
     qtrPortfolio: Number(entry.qtrPortfolio),
     qtrBenchmark: Number(entry.qtrBenchmark),
+    updatedAt: lastDayOfPrevMonth(),
   };
   store.updatedAt = lastDayOfPrevMonth();
 

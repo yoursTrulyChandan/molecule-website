@@ -6,6 +6,7 @@ export interface PerformanceEntry {
   cumBenchmark: number;
   qtrPortfolio: number;
   qtrBenchmark: number;
+  updatedAt?: string;
 }
 
 export interface PerformanceStore {

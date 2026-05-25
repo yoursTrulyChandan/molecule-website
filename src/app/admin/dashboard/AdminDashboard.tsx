@@ -4,19 +4,23 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { PerformanceStore } from "@/lib/performance-storage";
 import type { ComplaintStore } from "@/lib/complaints-storage";
+import type { DocumentStore } from "@/lib/documents-storage";
 import PerformanceEditor from "./PerformanceEditor";
 import ComplaintEditor from "./ComplaintEditor";
+import DocumentEditor from "./DocumentEditor";
 
-type Tab = "charts" | "complaints";
+type Tab = "charts" | "complaints" | "documents";
 
 export default function AdminDashboard({
   email,
   perfStore,
   complaintStore,
+  documentStore,
 }: {
   email: string;
   perfStore: PerformanceStore;
   complaintStore: ComplaintStore;
+  documentStore: DocumentStore;
 }) {
   const [activeTab, setActiveTab] = useState<Tab>("charts");
   const [loggingOut, setLoggingOut] = useState(false);
@@ -64,11 +68,15 @@ export default function AdminDashboard({
           <TabButton active={activeTab === "complaints"} onClick={() => setActiveTab("complaints")}>
             📋 Complaint Report
           </TabButton>
+          <TabButton active={activeTab === "documents"} onClick={() => setActiveTab("documents")}>
+            📄 Documents
+          </TabButton>
         </div>
 
         {/* ── Tab Content ── */}
         {activeTab === "charts" && <PerformanceEditor initialStore={perfStore} />}
         {activeTab === "complaints" && <ComplaintEditor initialStore={complaintStore} />}
+        {activeTab === "documents" && <DocumentEditor initialStore={documentStore} />}
       </main>
     </div>
   );
