@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Abel, Roboto } from "next/font/google";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import "./globals.css";

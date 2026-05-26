@@ -22,9 +22,32 @@ function NavLink({ item, onClick, className }: { item: NavItem; onClick?: () => 
   );
 }
 
-export default function Header() {
+export default function Header({
+  investorCharterUrl,
+  disclosureDocumentUrl,
+}: {
+  investorCharterUrl?: string;
+  disclosureDocumentUrl?: string;
+}) {
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState<string | null>(null);
+
+  const navItems = NAV_ITEMS.map((item) => {
+    if (item.href === "/documents/Disclosure-Document.pdf" && disclosureDocumentUrl) {
+      return { ...item, href: disclosureDocumentUrl };
+    }
+    if (item.children) {
+      return {
+        ...item,
+        children: item.children.map((child) =>
+          child.href === "/documents/Investor-Charter.pdf" && investorCharterUrl
+            ? { ...child, href: investorCharterUrl }
+            : child
+        ),
+      };
+    }
+    return item;
+  });
 
   return (
     <>
@@ -36,7 +59,7 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1 font-roboto">
-            {NAV_ITEMS.map((item) => (
+            {navItems.map((item) => (
               <div key={item.label} className="nav-item relative group">
                 {item.children ? (
                   <>
@@ -89,7 +112,7 @@ export default function Header() {
       {open && (
         <div className="lg:hidden fixed inset-0 z-40 bg-white overflow-y-auto font-roboto">
           <div className="px-4 pt-20 pb-6 space-y-3">
-            {NAV_ITEMS.map((item) => (
+            {navItems.map((item) => (
               <div key={item.label}>
                 {item.children ? (
                   <>
