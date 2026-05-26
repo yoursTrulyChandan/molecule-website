@@ -21,7 +21,6 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
   const [saving, setSaving] = useState(false);
 
   const currentIdx = store.data.length - 1;
-  const isPast = (idx: number) => idx !== currentIdx;
 
   function openAdd() {
     setFormEntry(emptyEntry());
@@ -63,14 +62,9 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
       if (modal.type === "add") {
         res = await apiCall("POST", formEntry);
       } else if (modal.type === "edit") {
-        res = await apiCall("PUT", {
-          index: modal.index,
-          entry: formEntry,
-        });
+        res = await apiCall("PUT", { index: modal.index, entry: formEntry });
       } else if (modal.type === "delete") {
-        res = await apiCall("DELETE", {
-          index: modal.index,
-        });
+        res = await apiCall("DELETE", { index: modal.index });
       } else return;
 
       const data = await res!.json();
@@ -87,6 +81,22 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
 
   const reversedRows = [...store.data].map((row, i) => ({ row, idx: i })).reverse();
 
+  const periodCell = (row: PerformanceEntry, idx: number) => (
+    <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">
+      <div className="flex items-center gap-2">
+        <span>{row.label}</span>
+        {idx === currentIdx && (
+          <span className="text-[10px] bg-brand text-white rounded-full px-2 py-0.5 font-semibold tracking-wide">CURRENT</span>
+        )}
+        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity ml-1">
+          <button onClick={() => openEdit(idx)} className="text-brand hover:text-brand-dark text-xs font-semibold">Edit</button>
+          <span className="text-gray-300">|</span>
+          <button onClick={() => openDelete(idx)} className="text-red-500 hover:text-red-600 text-xs font-semibold">Delete</button>
+        </div>
+      </div>
+    </td>
+  );
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -99,22 +109,14 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
       <TableSection
         title="Cumulative Performance"
         onAdd={openAdd}
-        columns={["Period", "Portfolio", "BSE500TRI", "Timestamp", "Actions"]}
+        columns={["Period Ending", "Portfolio", "BSE500TRI", "Timestamp"]}
       >
         {reversedRows.map(({ row, idx }) => (
-          <tr key={idx} className={idx === currentIdx ? "bg-blue-50/60" : "hover:bg-gray-50 transition-colors"}>
-            <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">
-              {row.label}
-              {idx === currentIdx && (
-                <span className="ml-2 text-[10px] bg-brand text-white rounded-full px-2 py-0.5 font-semibold tracking-wide">CURRENT</span>
-              )}
-            </td>
+          <tr key={idx} className={`group ${idx === currentIdx ? "bg-blue-50/60" : "hover:bg-gray-50 transition-colors"}`}>
+            {periodCell(row, idx)}
             <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.cumPortfolio}</td>
             <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.cumBenchmark}</td>
             <td className="px-4 py-3 text-right"><MonthlyTimestamps edits={row.monthlyEdits} /></td>
-            <td className="px-4 py-3 text-center">
-              <ActionButtons onEdit={() => openEdit(idx)} onDelete={() => openDelete(idx)} />
-            </td>
           </tr>
         ))}
       </TableSection>
@@ -122,16 +124,11 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
       {/* ── Quarterly Performance Table ── */}
       <TableSection
         title="Quarterly Performance"
-        columns={["Period", "Portfolio", "BSE500TRI", "Timestamp", "Actions"]}
+        columns={["Period Ending", "Portfolio", "BSE500TRI", "Timestamp"]}
       >
         {reversedRows.map(({ row, idx }) => (
-          <tr key={idx} className={idx === currentIdx ? "bg-blue-50/60" : "hover:bg-gray-50 transition-colors"}>
-            <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">
-              {row.label}
-              {idx === currentIdx && (
-                <span className="ml-2 text-[10px] bg-brand text-white rounded-full px-2 py-0.5 font-semibold tracking-wide">CURRENT</span>
-              )}
-            </td>
+          <tr key={idx} className={`group ${idx === currentIdx ? "bg-blue-50/60" : "hover:bg-gray-50 transition-colors"}`}>
+            {periodCell(row, idx)}
             <td className={`px-4 py-3 text-right tabular-nums font-medium ${row.qtrPortfolio >= 0 ? "text-emerald-600" : "text-red-500"}`}>
               {row.qtrPortfolio}
             </td>
@@ -139,9 +136,6 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
               {row.qtrBenchmark}
             </td>
             <td className="px-4 py-3 text-right"><MonthlyTimestamps edits={row.monthlyEdits} /></td>
-            <td className="px-4 py-3 text-center">
-              <ActionButtons onEdit={() => openEdit(idx)} onDelete={() => openDelete(idx)} />
-            </td>
           </tr>
         ))}
       </TableSection>
@@ -217,7 +211,7 @@ function TableSection({
                 {columns.map((col) => (
                   <th
                     key={col}
-                    className={`px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider ${col === "Period" ? "text-left" : col === "Actions" ? "text-center" : "text-right"}`}
+                    className={`px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider ${col === "Period Ending" ? "text-left" : "text-right"}`}
                   >
                     {col}
                   </th>
@@ -252,16 +246,6 @@ function MonthlyTimestamps({ edits }: { edits?: Record<string, string> }) {
           </div>
         );
       })}
-    </div>
-  );
-}
-
-function ActionButtons({ onEdit, onDelete }: { onEdit: () => void; onDelete: () => void }) {
-  return (
-    <div className="flex items-center justify-center gap-3">
-      <button onClick={onEdit} className="text-brand hover:text-brand-dark text-xs font-semibold transition-colors">Edit</button>
-      <span className="text-gray-200">|</span>
-      <button onClick={onDelete} className="text-red-500 hover:text-red-600 text-xs font-semibold transition-colors">Delete</button>
     </div>
   );
 }
@@ -324,4 +308,3 @@ export function FieldInput({
     </div>
   );
 }
-

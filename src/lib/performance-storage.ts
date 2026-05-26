@@ -30,7 +30,7 @@ export async function getPerformanceData(): Promise<PerformanceStore> {
       // fall through to fallback
     }
   }
-  return fallbackData as PerformanceStore;
+  return fallbackData as unknown as PerformanceStore;
 }
 
 export async function setPerformanceData(store: PerformanceStore): Promise<void> {
