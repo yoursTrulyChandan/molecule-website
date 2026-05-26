@@ -1,8 +1,13 @@
 const KV_KEY = "documents:data";
 
+export interface DocumentUpload {
+  name: string;
+  uploadedAt: string;
+}
+
 export interface DocumentInfo {
   url: string;
-  updatedAt: string;
+  uploadHistory: DocumentUpload[];
 }
 
 export interface DocumentStore {
@@ -13,11 +18,11 @@ export interface DocumentStore {
 const FALLBACK: DocumentStore = {
   investorCharter: {
     url: "/documents/Investor-Charter.pdf",
-    updatedAt: "",
+    uploadHistory: [],
   },
   disclosureDocument: {
     url: "/documents/Disclosure-Document.pdf",
-    updatedAt: "",
+    uploadHistory: [],
   },
 };
 

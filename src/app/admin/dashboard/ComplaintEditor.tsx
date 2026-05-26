@@ -175,7 +175,7 @@ function ComplaintTableSection({
           <table className="w-full text-sm">
             <thead className="sticky top-0 z-10 bg-gray-50 border-b border-gray-200">
               <tr>
-                {["Month", "Pending at Start", "Received", "Disposed", "Unresolved at End", "Actions"].map((col) => (
+                {["Month", "Pending at Start", "Received", "Disposed", "Unresolved at End", "Timestamp", "Actions"].map((col) => (
                   <th
                     key={col}
                     className={`px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap ${
@@ -200,6 +200,9 @@ function ComplaintTableSection({
                   <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.received}</td>
                   <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.disposed}</td>
                   <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.unresolved}</td>
+                  <td className="px-4 py-3 text-right tabular-nums text-gray-400 text-xs whitespace-nowrap">
+                    {row.createdAt ? row.createdAt.split("-").reverse().join("-") : "—"}
+                  </td>
                   <td className="px-4 py-3 text-center">
                     <div className="flex items-center justify-center gap-3">
                       <button onClick={() => onEdit(idx)} className="text-brand hover:text-brand-dark text-xs font-semibold transition-colors">Edit</button>

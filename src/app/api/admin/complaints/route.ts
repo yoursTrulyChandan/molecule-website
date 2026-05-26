@@ -28,6 +28,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid table" }, { status: 400 });
   }
 
+  const today = new Date();
+  const createdAt = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
   const store = await getComplaintData();
   store[table].push({
     month: row.month,
@@ -35,6 +38,7 @@ export async function POST(req: NextRequest) {
     received: Number(row.received),
     disposed: Number(row.disposed),
     unresolved: Number(row.unresolved),
+    createdAt,
   });
 
   await setComplaintData(store);
@@ -68,6 +72,7 @@ export async function PUT(req: NextRequest) {
     received: Number(row.received),
     disposed: Number(row.disposed),
     unresolved: Number(row.unresolved),
+    createdAt: arr[index].createdAt, // preserve original timestamp, never overwrite
   };
 
   await setComplaintData(store);

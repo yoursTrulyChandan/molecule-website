@@ -6,6 +6,7 @@ export interface ComplaintRow {
   received: number;
   disposed: number;
   unresolved: number;
+  createdAt?: string; // set once on first add, never overwritten
 }
 
 export interface ComplaintStore {

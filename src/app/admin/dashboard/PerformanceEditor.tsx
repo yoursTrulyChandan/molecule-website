@@ -99,7 +99,7 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
       <TableSection
         title="Cumulative Performance"
         onAdd={openAdd}
-        columns={["Period", "Portfolio", "BSE500TRI", "Last Updated", "Actions"]}
+        columns={["Period", "Portfolio", "BSE500TRI", "Timestamp", "Actions"]}
       >
         {reversedRows.map(({ row, idx }) => (
           <tr key={idx} className={idx === currentIdx ? "bg-blue-50/60" : "hover:bg-gray-50 transition-colors"}>
@@ -111,9 +111,7 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
             </td>
             <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.cumPortfolio}</td>
             <td className="px-4 py-3 text-right tabular-nums text-gray-700">{row.cumBenchmark}</td>
-            <td className="px-4 py-3 text-right tabular-nums text-gray-400 text-xs whitespace-nowrap">
-              {row.updatedAt ? row.updatedAt.split("-").reverse().join("-") : "—"}
-            </td>
+            <td className="px-4 py-3 text-right"><MonthlyTimestamps edits={row.monthlyEdits} /></td>
             <td className="px-4 py-3 text-center">
               <ActionButtons onEdit={() => openEdit(idx)} onDelete={() => openDelete(idx)} />
             </td>
@@ -124,7 +122,7 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
       {/* ── Quarterly Performance Table ── */}
       <TableSection
         title="Quarterly Performance"
-        columns={["Period", "Portfolio", "BSE500TRI", "Last Updated", "Actions"]}
+        columns={["Period", "Portfolio", "BSE500TRI", "Timestamp", "Actions"]}
       >
         {reversedRows.map(({ row, idx }) => (
           <tr key={idx} className={idx === currentIdx ? "bg-blue-50/60" : "hover:bg-gray-50 transition-colors"}>
@@ -140,9 +138,7 @@ export default function PerformanceEditor({ initialStore }: { initialStore: Perf
             <td className={`px-4 py-3 text-right tabular-nums font-medium ${row.qtrBenchmark >= 0 ? "text-emerald-600" : "text-red-500"}`}>
               {row.qtrBenchmark}
             </td>
-            <td className="px-4 py-3 text-right tabular-nums text-gray-400 text-xs whitespace-nowrap">
-              {row.updatedAt ? row.updatedAt.split("-").reverse().join("-") : "—"}
-            </td>
+            <td className="px-4 py-3 text-right"><MonthlyTimestamps edits={row.monthlyEdits} /></td>
             <td className="px-4 py-3 text-center">
               <ActionButtons onEdit={() => openEdit(idx)} onDelete={() => openDelete(idx)} />
             </td>
@@ -232,6 +228,30 @@ function TableSection({
           </table>
         </div>
       </div>
+    </div>
+  );
+}
+
+const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function MonthlyTimestamps({ edits }: { edits?: Record<string, string> }) {
+  if (!edits || Object.keys(edits).length === 0) {
+    return <span className="text-gray-400 text-xs">—</span>;
+  }
+  const sorted = Object.entries(edits).sort(([a], [b]) => a.localeCompare(b));
+  return (
+    <div className="space-y-0.5">
+      {sorted.map(([yyyyMM, date]) => {
+        const [y, m] = yyyyMM.split("-");
+        const label = `${MONTH_NAMES[parseInt(m) - 1]}-${y.slice(2)}`;
+        const display = date.split("-").reverse().join("-");
+        return (
+          <div key={yyyyMM} className="text-xs whitespace-nowrap">
+            <span className="text-gray-500 font-medium">{label}:</span>{" "}
+            <span className="text-gray-400">{display}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }

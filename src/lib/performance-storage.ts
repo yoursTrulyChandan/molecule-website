@@ -6,7 +6,7 @@ export interface PerformanceEntry {
   cumBenchmark: number;
   qtrPortfolio: number;
   qtrBenchmark: number;
-  updatedAt?: string;
+  monthlyEdits?: Record<string, string>; // key: "YYYY-MM", value: first-edit date "YYYY-MM-DD"
 }
 
 export interface PerformanceStore {

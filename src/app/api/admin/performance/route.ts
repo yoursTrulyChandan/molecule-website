@@ -19,6 +19,16 @@ function lastDayOfPrevMonth(): string {
   return `${y}-${m}-${d}`;
 }
 
+function todayStr(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function currentYearMonth(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+}
+
 export async function GET() {
   const email = await requireAuth();
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -41,7 +51,7 @@ export async function POST(req: NextRequest) {
   };
 
   const store = await getPerformanceData();
-  entry.updatedAt = lastDayOfPrevMonth();
+  entry.monthlyEdits = { [currentYearMonth()]: todayStr() };
   store.data.push(entry);
   store.updatedAt = lastDayOfPrevMonth();
 
@@ -66,13 +76,18 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: "Invalid index" }, { status: 400 });
   }
 
+  const existing = store.data[index];
+  const month = currentYearMonth();
+  const monthlyEdits = { ...(existing.monthlyEdits ?? {}) };
+  if (!monthlyEdits[month]) monthlyEdits[month] = todayStr();
+
   store.data[index] = {
     label: entry.label,
     cumPortfolio: Number(entry.cumPortfolio),
     cumBenchmark: Number(entry.cumBenchmark),
     qtrPortfolio: Number(entry.qtrPortfolio),
     qtrBenchmark: Number(entry.qtrBenchmark),
-    updatedAt: lastDayOfPrevMonth(),
+    monthlyEdits,
   };
   store.updatedAt = lastDayOfPrevMonth();
 
